@@ -14,4 +14,4 @@ void fragment() {
 
 [resource]
 shader = SubResource("Shader_hov4l")
-shader_parameter/amount = 2.000000095
+shader_parameter/amount = 2.82800013433

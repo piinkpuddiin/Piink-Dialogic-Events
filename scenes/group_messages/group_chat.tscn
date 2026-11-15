@@ -12,7 +12,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=234009269]
+handle_input_locally = false
 size = Vector2i(590, 1050)
+render_target_update_mode = 4
 
 [node name="Phone" parent="SubViewportContainer/SubViewport" unique_id=2035657629 instance=ExtResource("1_uv6fy")]
 

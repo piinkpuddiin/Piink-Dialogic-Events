@@ -1,23 +1,69 @@
 [gd_scene format=3 uid="uid://c0c0bjn3k3rip"]
 
 [ext_resource type="Script" uid="uid://jtuckaes4r0o" path="res://themes/group_messages/dialogic_message.gd" id="1_brhxs"]
-[ext_resource type="Material" uid="uid://ch7kttg2030u8" path="res://shaders/blur_menu.tres" id="2_sx1gb"]
 [ext_resource type="Script" uid="uid://drhfq6rmdeuri" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="2_tsecs"]
-[ext_resource type="ArrayMesh" uid="uid://dos1nkyahufhs" path="res://scenes/phone_mesh.tres" id="4_4x0bf"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4x0bf"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-
-[sub_resource type="Sky" id="Sky_hnrjo"]
-sky_material = SubResource("ProceduralSkyMaterial_4x0bf")
-
-[sub_resource type="Environment" id="Environment_4pmwu"]
-background_mode = 2
-sky = SubResource("Sky_hnrjo")
-glow_enabled = true
+[ext_resource type="Shader" uid="uid://ccj722y58g2c8" path="res://shaders/glass.gdshader" id="4_4x0bf"]
+[ext_resource type="Material" uid="uid://b8sxilcx8p8tb" path="res://shaders/glass_aero.tres" id="4_hnrjo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rxnwj"]
+bg_color = Color(0.04303915, 0.043039158, 0.04303913, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4x0bf"]
+shader = ExtResource("4_4x0bf")
+shader_parameter/blur = 1.10000005225
+shader_parameter/warp_intensity = 0.4150000197125
+shader_parameter/strength_x = 45.0000021375
+shader_parameter/strength_y = 45.0000021375
+shader_parameter/offset_x = 0.0
+shader_parameter/offset_y = -0.09999995725
+shader_parameter/corner_radius = 0.0
+shader_parameter/edge_smoothness = 1.0
+shader_parameter/tint = Color(0.22745098, 0.22745098, 0.22745098, 0.44313726)
+shader_parameter/edge_highlight = Color(1, 1, 1, 0.3)
+shader_parameter/edge_width = 0.0
+shader_parameter/chromatic_strength = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4pmwu"]
+bg_color = Color(0.6, 0.6, 0.9019608, 0)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4x0bf"]
+bg_color = Color(0.05882353, 0.05882353, 0.05882353, 0.92156863)
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bai0e"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5qnws"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.021434633, 0.021434639, 0.021434609, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 10
+anti_aliasing_size = 5.009
 
 [node name="DialogicLayoutLayer_MessageChat" type="Node" unique_id=2247279]
 script = ExtResource("1_brhxs")
@@ -28,49 +74,24 @@ group_users = Dictionary[String, Color]({
 mc_color = Color(0.8352941, 0.14901961, 0.20784314, 1)
 metadata/_custom_type_script = "uid://c8d470kti274h"
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1251943541]
-environment = SubResource("Environment_4pmwu")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=498495372]
-transform = Transform3D(0.052335974, -0.8422356, 0.5365632, 0, 0.5372996, 0.8433915, -0.9986295, -0.044139713, 0.028120097, 0, 0, 0)
-shadow_enabled = true
-
-[node name="Dialogic_SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1690063336]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(540, 1050)
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -540.0
-offset_top = -525.0
-offset_bottom = 525.0
-grow_horizontal = 0
-grow_vertical = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="Dialogic_SubViewportContainer" unique_id=1185197737]
-handle_input_locally = false
-physics_object_picking = true
-size = Vector2i(540, 1050)
-render_target_update_mode = 0
-
-[node name="Panel" type="Panel" parent="Dialogic_SubViewportContainer/SubViewport" unique_id=1125765662]
-anchors_preset = 15
-anchor_right = 1.0
+[node name="Panel" type="Panel" parent="." unique_id=1125765662]
+custom_minimum_size = Vector2(550, 0)
+anchors_preset = -1
+anchor_left = 0.34375
+anchor_right = 0.65625
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_rxnwj")
 metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer2" type="MarginContainer" parent="Dialogic_SubViewportContainer/SubViewport/Panel" unique_id=1502169675]
+[node name="MarginContainer2" type="MarginContainer" parent="Panel" unique_id=1502169675]
+clip_contents = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 19.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 10
@@ -78,37 +99,38 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="blur_color_rect" type="ColorRect" parent="Dialogic_SubViewportContainer/SubViewport/Panel/MarginContainer2" unique_id=1647398009]
-visible = false
-material = ExtResource("2_sx1gb")
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/MarginContainer2" unique_id=1555417841]
 layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
 
-[node name="white_color_rect" type="ColorRect" parent="Dialogic_SubViewportContainer/SubViewport/Panel/MarginContainer2/blur_color_rect" unique_id=264425983]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 1, 1, 0.4862745)
-
-[node name="MarginContainer" type="MarginContainer" parent="Dialogic_SubViewportContainer/SubViewport/Panel/MarginContainer2" unique_id=148323722]
-layout_mode = 2
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_bottom = 55
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Dialogic_SubViewportContainer/SubViewport/Panel/MarginContainer2/MarginContainer" unique_id=1128235594]
+[node name="typing_hbox" type="HBoxContainer" parent="Panel/MarginContainer2/MarginContainer2" unique_id=1597355132]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 8
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer2" unique_id=1128235594]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 950)
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 0
 vertical_scroll_mode = 3
 
-[node name="MessageList" type="VBoxContainer" parent="Dialogic_SubViewportContainer/SubViewport/Panel/MarginContainer2/MarginContainer/ScrollContainer" unique_id=887573023]
+[node name="MessageList" type="VBoxContainer" parent="Panel/MarginContainer2/ScrollContainer" unique_id=887573023]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DialogicNode_DialogText" type="RichTextLabel" parent="Dialogic_SubViewportContainer/SubViewport/Panel/MarginContainer2/MarginContainer/ScrollContainer/MessageList" unique_id=1348564658 node_paths=PackedStringArray("textbox_root")]
+[node name="Control" type="Control" parent="Panel/MarginContainer2/ScrollContainer/MessageList" unique_id=1691168947]
+custom_minimum_size = Vector2(0, 82)
+layout_mode = 2
+
+[node name="DialogicNode_DialogText" type="RichTextLabel" parent="Panel/MarginContainer2/ScrollContainer/MessageList" unique_id=1348564658 node_paths=PackedStringArray("textbox_root")]
 unique_name_in_owner = true
 layout_mode = 2
 bbcode_enabled = true
@@ -117,63 +139,115 @@ script = ExtResource("2_tsecs")
 textbox_root = NodePath(".")
 metadata/_custom_type_script = "uid://drhfq6rmdeuri"
 
-[node name="time_label" type="Label" parent="Dialogic_SubViewportContainer/SubViewport/Panel/MarginContainer2/MarginContainer/ScrollContainer/MessageList/DialogicNode_DialogText" unique_id=1384174081]
+[node name="time_label" type="Label" parent="Panel/MarginContainer2/ScrollContainer/MessageList/DialogicNode_DialogText" unique_id=1384174081]
 unique_name_in_owner = true
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 20.0
 
-[node name="MarginContainer2" type="MarginContainer" parent="Dialogic_SubViewportContainer/SubViewport/Panel/MarginContainer2" unique_id=1555417841]
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 5
-
-[node name="typing_hbox" type="HBoxContainer" parent="Dialogic_SubViewportContainer/SubViewport/Panel/MarginContainer2/MarginContainer2" unique_id=1597355132]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 8
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Dialogic_SubViewportContainer/SubViewport" unique_id=380181331]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=380181331]
 unique_name_in_owner = true
 volume_db = -50.0
 
-[node name="Phone_SubViewportContainer" type="SubViewportContainer" parent="." unique_id=2051760775]
-custom_minimum_size = Vector2(540, 1050)
+[node name="phone_ui" type="Control" parent="." unique_id=439304358]
+z_index = 10
+custom_minimum_size = Vector2(600, 1080)
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -270.0
-offset_top = -525.0
-offset_right = 270.0
-offset_bottom = 525.0
+offset_left = -300.0
+offset_top = -540.0
+offset_right = 300.0
+offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="SubViewport" type="SubViewport" parent="Phone_SubViewportContainer" unique_id=433525756]
-transparent_bg = true
-handle_input_locally = false
-physics_object_picking = true
-size = Vector2i(540, 1050)
-render_target_update_mode = 4
+[node name="top_ui_blur_panel" type="Panel" parent="phone_ui" unique_id=888081563]
+material = SubResource("ShaderMaterial_4x0bf")
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4pmwu")
 
-[node name="Phone" type="Node3D" parent="Phone_SubViewportContainer/SubViewport" unique_id=2035657629]
-transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+[node name="top_ui_panel" type="Panel" parent="phone_ui" unique_id=778367012]
+self_modulate = Color(1, 1, 1, 0.6392157)
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4x0bf")
 
-[node name="huawei_phone" type="Node3D" parent="Phone_SubViewportContainer/SubViewport/Phone" unique_id=1007167902]
+[node name="MarginContainer" type="MarginContainer" parent="phone_ui" unique_id=2125026599]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -106.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="phone" type="MeshInstance3D" parent="Phone_SubViewportContainer/SubViewport/Phone/huawei_phone" unique_id=1099533166]
-mesh = ExtResource("4_4x0bf")
+[node name="bottom_ui_hbox" type="HBoxContainer" parent="phone_ui/MarginContainer" unique_id=930259159]
+layout_mode = 2
+size_flags_horizontal = 17
 
-[node name="Camera3D" type="Camera3D" parent="Phone_SubViewportContainer/SubViewport" unique_id=34238688]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.0365055)
+[node name="plus_colorrect" type="ColorRect" parent="phone_ui/MarginContainer/bottom_ui_hbox" unique_id=407598923]
+material = ExtResource("4_hnrjo")
+custom_maximum_size = Vector2(80, -1)
+layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Phone_SubViewportContainer/SubViewport" unique_id=1397181357]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.9089594)
+[node name="border_panel" type="Panel" parent="phone_ui/MarginContainer/bottom_ui_hbox/plus_colorrect" unique_id=425729133]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bai0e")
 
-[connection signal="finished_revealing_text" from="Dialogic_SubViewportContainer/SubViewport/Panel/MarginContainer2/MarginContainer/ScrollContainer/MessageList/DialogicNode_DialogText" to="." method="_on_dialogic_node_dialog_text_finished_revealing_text"]
-[connection signal="started_revealing_text" from="Dialogic_SubViewportContainer/SubViewport/Panel/MarginContainer2/MarginContainer/ScrollContainer/MessageList/DialogicNode_DialogText" to="." method="_on_dialogic_node_dialog_text_started_revealing_text"]
+[node name="Control" type="Control" parent="phone_ui/MarginContainer/bottom_ui_hbox" unique_id=754786489]
+custom_maximum_size = Vector2(20, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="message_bar_colorrect" type="ColorRect" parent="phone_ui/MarginContainer/bottom_ui_hbox" unique_id=823031763]
+material = ExtResource("4_hnrjo")
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="border_panel" type="Panel" parent="phone_ui/MarginContainer/bottom_ui_hbox/message_bar_colorrect" unique_id=1912866264]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bai0e")
+
+[node name="phone_border_panel" type="Panel" parent="phone_ui" unique_id=333455157]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5qnws")
+
+[connection signal="finished_revealing_text" from="Panel/MarginContainer2/ScrollContainer/MessageList/DialogicNode_DialogText" to="." method="_on_dialogic_node_dialog_text_finished_revealing_text"]
+[connection signal="started_revealing_text" from="Panel/MarginContainer2/ScrollContainer/MessageList/DialogicNode_DialogText" to="." method="_on_dialogic_node_dialog_text_started_revealing_text"]

@@ -35,19 +35,20 @@ directories/dch_directory={
 "npc": "res://characters/npc.dch"
 }
 directories/dtl_directory={
+"chat_message_timeline": "res://dialogue/chat_message_timeline.dtl",
 "group_message_timeline": "res://dialogue/group_message_timeline.dtl",
 "next_page_timeline": "res://dialogue/next_page_timeline.dtl",
 "story_progress_timeline": "res://dialogue/story_progress_timeline.dtl",
 "update_id_timeline": "res://dialogue/update_id_timeline.dtl"
 }
 layout/style_directory={
-"": "res://themes/simple/simple.tres",
+"": "res://themes/group_messages/smartphone.tres",
 "moon_style": "res://themes/next_page/moon_style.tres",
 "side_dialogue": "res://themes/side_dialogue/side_dialogue.tres",
 "simple": "res://themes/simple/simple.tres",
 "smartphone": "res://themes/group_messages/smartphone.tres"
 }
-text/letter_speed=0.1
+text/letter_speed=0.0
 text/initial_text_reveal_skippable=true
 text/text_reveal_skip_delay=0.1
 text/advance_delay=0.1
@@ -80,7 +81,7 @@ audio/channel_defaults={
 }
 }
 layout/style_list=["res://themes/next_page/moon_style.tres", "res://themes/group_messages/smartphone.tres", "res://themes/side_dialogue/side_dialogue.tres", "res://themes/simple/simple.tres"]
-layout/default_style="res://themes/simple/simple.tres"
+layout/default_style="res://themes/group_messages/smartphone.tres"
 glossary/default_case_sensitive=true
 variables={}
 

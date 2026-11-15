@@ -40,18 +40,20 @@ var previous_speaker: String = ""
 var last_text_time := ""
 ## Change to true if player speaks first, else to false.
 var new_message:= false
+var tween: Tween
 
-# TODO: Add a phone overlay. Make it smexy and 3D
 
 func _ready() -> void:
 	GlobalVar.new_image_message.connect(add_image_message)
 	GlobalVar.emoji_react.connect(add_reaction)
-	Dialogic.Text.text_finished.connect(currently_typing)
-	Dialogic.Text.about_to_show_text.connect(remove_typing)
+	#Dialogic.Text.text_finished.connect(currently_typing)
+	#Dialogic.Text.about_to_show_text.connect(remove_typing)
+
 
 func _apply_export_overrides() -> void:
 	if !is_inside_tree():
 		await ready
+
 
 func currently_typing(_info) -> void:
 	remove_typing()
@@ -126,7 +128,7 @@ func _on_dialogic_node_dialog_text_finished_revealing_text() -> void:
 	
 	if last_text.is_empty():
 		return
-	
+	#print("Dialog text: ",last_text)
 	dialog_text.hide()
 	add_message(last_text, last_text_speaker.get_character_name(), last_text_time)
 
@@ -138,6 +140,9 @@ func _on_dialogic_node_dialog_text_finished_revealing_text() -> void:
 ## These textboxes are purely visual and not DialogicNode_DialogText nodes!
 ## Only the newest messages appears on the %DialogicNode_DialogText node.
 func add_message(text:String, speaker_name:String, _time:String) -> void:
+	if tween:
+		tween.kill()
+	
 	var message: RichTextLabel = load(message_scene).instantiate()
 	var icon: Panel = load(message_icon).instantiate()
 	var hbox: HBoxContainer = HBoxContainer.new()
@@ -208,6 +213,9 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 	message.set_meta('speaker', speaker_name)
 	previous_speaker = current_speaker
 	
+	tween = get_tree().create_tween()
+	tween.tween_property(scroll_container, "scroll_vertical", scroll_container.get_v_scroll_bar().max_value, 0.5)
+	
 	await get_tree().process_frame
 	scroll_container.ensure_control_visible(hbox)
 #endregion
@@ -250,8 +258,6 @@ func add_reaction(reaction, time, amount):
 			await get_tree().create_timer(randf_range(0.5,1.9)).timeout
 			reaction_message.text = reaction + str(i) + " "
 
-	await get_tree().process_frame
-	scroll_container.ensure_control_visible(message_list.get_child(-1))
 
 ## Adds an image message (a custom scene)
 func add_image_message(image:String, speaker:String) -> void:

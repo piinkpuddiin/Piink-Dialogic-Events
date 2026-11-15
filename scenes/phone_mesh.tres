@@ -7,8 +7,12 @@ albedo_color = Color(0.03483068, 0.015020032, 0.067476936, 1)
 metallic = 0.122727275
 roughness = 0.45
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_7sr4a"]
+viewport_path = NodePath("Dialogic_SubViewportContainer/SubViewport")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_balt5"]
 resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_7sr4a")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_jmr6v"]
 _surfaces = [{

@@ -1,18 +1,19 @@
-n: This is the beginning of the timeline.
-[image_message speaker="n" image="res://images/group_message/cloud_study__stormy_sunset_1998.20.1.jpg"]
-[emoji_reaction emoji="💕" time="2" amount="2"]
-- Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-mc: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-n: Duis aute.
-- irure dolor in reprehenderit?
-mc: irure dolor in reprehenderit?
-n: in voluptate!
-- velit esse cillum dolore eu fugiat nulla pariatur.
-mc: velit esse cillum dolore eu fugiat nulla pariatur.
-[emoji_reaction emoji="🔥" time="0" amount="1"]
-npc: Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam!
-[emoji_reaction emoji="❔" time="0" amount="3"]
-npc: eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-[emoji_reaction emoji="🤭" time="0" amount="1"]
-n: This is the end of the timeline.
+#n: This is the beginning of the timeline.
+#[image_message speaker="n" image="res://images/group_message/cloud_study__stormy_sunset_1998.20.1.jpg"]
+#[emoji_reaction emoji="💕" time="2" amount="2"]
+#mc: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+#n: Duis aute.
+#mc: irure dolor in reprehenderit?
+#n: in voluptate!
+#mc: velit esse cillum dolore eu fugiat nulla pariatur.
+#[emoji_reaction emoji="🔥" time="0" amount="1"]
+#npc: Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam!
+#[emoji_reaction emoji="❔" time="0" amount="3"]
+#npc: eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+#[emoji_reaction emoji="🤭" time="3" amount="2"]
+#n: This is the end of the timeline.
+n: [i]eeeeeaque[/i] ipsa quae [b]ab[/b] illo inventore veritatis e
+n: This is NOT, the end of the timeline.
+mc: irure dolor, [b]in reprehenderit
+mc: Attempt #37845674895
 [end_timeline]

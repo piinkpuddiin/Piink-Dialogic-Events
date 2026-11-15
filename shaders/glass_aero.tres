@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b8sxilcx8p8tb"]
+
+[ext_resource type="Shader" uid="uid://ccj722y58g2c8" path="res://shaders/glass.gdshader" id="1_bai0e"]
+
+[resource]
+shader = ExtResource("1_bai0e")
+shader_parameter/blur = 1.10000005225
+shader_parameter/warp_intensity = 0.4150000197125
+shader_parameter/strength_x = 45.0000021375
+shader_parameter/strength_y = 45.0000021375
+shader_parameter/offset_x = 0.0
+shader_parameter/offset_y = -0.09999995725
+shader_parameter/corner_radius = 1.0
+shader_parameter/edge_smoothness = 1.0
+shader_parameter/tint = Color(0.22745098, 0.22745098, 0.22745098, 0.44313726)
+shader_parameter/edge_highlight = Color(1, 1, 1, 0.3)
+shader_parameter/edge_width = 0.0
+shader_parameter/chromatic_strength = 5.0

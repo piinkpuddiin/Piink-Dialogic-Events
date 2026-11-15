@@ -8,6 +8,7 @@
 [sub_resource type="AudioStream" id="AudioStream_txfo6"]
 
 [node name="DialogicLayoutLayer_MessageChoices" type="Control" unique_id=1633430078]
+z_index = 50
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
