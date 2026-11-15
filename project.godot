@@ -116,7 +116,7 @@ folder_colors={
 
 [gui]
 
-theme/custom_font="uid://cvwr22pq48tjr"
+theme/custom_font="uid://bp1mf3nqrwhc1"
 
 [input]
 
@@ -209,3 +209,5 @@ dialogic_default_action={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+textures/vram_compression/import_etc2_astc=true
+viewport/transparent_background=true

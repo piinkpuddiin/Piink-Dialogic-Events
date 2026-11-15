@@ -41,9 +41,6 @@ var last_text_time := ""
 ## Change to true if player speaks first, else to false.
 var new_message:= false
 
-
-# TODO: Make the currently typing show the typer icon
-# TODO: Make the player text into a choice button to click
 # TODO: Add a phone overlay. Make it smexy and 3D
 
 func _ready() -> void:
@@ -57,8 +54,10 @@ func _apply_export_overrides() -> void:
 		await ready
 
 func currently_typing(_info) -> void:
-	var x:= 0
+	remove_typing()
+	var icon: Panel = load(message_icon).instantiate()
 	var next_speaker: String
+	var x:= 0
 	
 	for i in Dialogic.current_timeline_events:
 		x += 1
@@ -68,20 +67,30 @@ func currently_typing(_info) -> void:
 			break
 		
 		if Dialogic.current_timeline_events[Dialogic.current_event_idx+x] is DialogicTextEvent:
-			print_rich("[b]the next event: ", Dialogic.current_timeline_events[Dialogic.current_event_idx+x])
-			print("we are at x: ", x)
+			#print_rich("[b]the next event: ", Dialogic.current_timeline_events[Dialogic.current_event_idx+x])
+			#print("we are at x: ", x)
 			next_speaker = Dialogic.current_timeline_events[Dialogic.current_event_idx+x].character_identifier
 			break
 	
-	print(next_speaker)
+	if !previous_speaker == next_speaker:
+		#print("The speaker is not the same as the previous one. Show the icon.")
+		var icon_profile = icon.get_node("TextureRect")
+		for i in group_users.keys():
+			if i == next_speaker:
+				icon_profile.modulate = group_users[i]
+	
+	await get_tree().create_timer(randf_range(.3, 1.2)).timeout
+	# We don't add the typing icon if the mc is writing, or if we reach the end of the timeline.
 	if next_speaker != "mc" and next_speaker != "":
 		var bubble_message: RichTextLabel = load("res://themes/group_messages/typing_message.tscn").instantiate()
-		bubble_message.text = next_speaker + " " + "•   •   •"
+		%typing_hbox.add_child(icon)
 		%typing_hbox.add_child(bubble_message)
+
 
 func remove_typing(_info: Dictionary = {}) -> void:
 	for i in %typing_hbox.get_children():
 		i.queue_free()
+
 
 func _add_space():
 	var message_space: Control = Control.new()
@@ -160,7 +169,8 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 				
 				hbox.alignment = BoxContainer.ALIGNMENT_END
 				message.grow_horizontal = Control.GROW_DIRECTION_END
-				message.horizontal_alignment= HorizontalAlignment.HORIZONTAL_ALIGNMENT_RIGHT
+				# NOTE: Sets the message to the right.
+				#message.horizontal_alignment= HorizontalAlignment.HORIZONTAL_ALIGNMENT_RIGHT
 				
 				if !previous_speaker == current_speaker:
 					var icon_profile = icon.get_node("TextureRect")
@@ -171,16 +181,13 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 					#print("This is still the mc speaking, we hide the icon")
 					if message_list.get_child(-2).has_meta('reaction'): 
 						print("The above message has a reaction!")
-					
-				message.text = text
 			
-			# NOTE: Make usernames match with pfp for ease
+			# NOTE: Make usernames match with profile picture for simplicity sake
 			_:
 				hbox.move_child(icon, 0)
 				
 				hbox.alignment = BoxContainer.ALIGNMENT_BEGIN
 				message.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-				message.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_LEFT
 				message.vertical_alignment = VerticalAlignment.VERTICAL_ALIGNMENT_CENTER
 				
 				if !previous_speaker == current_speaker:
@@ -192,10 +199,11 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 				elif previous_speaker == current_speaker:
 					#print("The speaker is still the same, hide the icon.")
 					icon.modulate = Color(0.0, 0.0, 0.0, 0.0)
-				message.text = text
 	
 	GlobalVar.new_phone_message.emit(message.get_content_width(), message.get_content_height(), current_speaker, previous_speaker)
 	
+	message.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_LEFT
+	message.text = text
 	message.vertical_alignment = VerticalAlignment.VERTICAL_ALIGNMENT_CENTER
 	message.set_meta('speaker', speaker_name)
 	previous_speaker = current_speaker
@@ -219,14 +227,14 @@ func add_reaction(reaction, time, amount):
 	
 	if message.get_child(0).has_meta('speaker'):
 		if message.get_child(0).get_meta('speaker') == "mc":
-			reaction_message.offset_transform_position = Vector2(43,22)
+			reaction_message.offset_transform_position = Vector2(37,32)
 			reaction_message.grow_horizontal = Control.GROW_DIRECTION_END
 			#await get_tree().create_timer(randf_range(min_reaction_time, max_reaction_time)).timeout
 			message.add_child(reaction_message)
 			message.move_child(reaction_message, 0)
 			message_list.add_child(extra_space)
 	else:
-		reaction_message.offset_transform_position = Vector2(-47,22)
+		reaction_message.offset_transform_position = Vector2(-42,27)
 		reaction_message.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 		#await get_tree().create_timer(randf_range(min_reaction_time, max_reaction_time)).timeout
 		message.add_child(reaction_message)

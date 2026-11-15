@@ -27,8 +27,15 @@ scene = ExtResource("3_o2l05")
 script = ExtResource("1_xs8ci")
 scene = ExtResource("4_esdd3")
 overrides = {
-"font_size_custom": "32.0",
-"font_use_global": "false"
+"boxes_min_size": "Vector2(100, 20)",
+"boxes_stylebox_hovered": "\"res://themes/group_messages/message_panel.tres\"",
+"boxes_stylebox_normal": "\"res://themes/group_messages/message_panel.tres\"",
+"font_custom": "\"res://fonts/akzidenz/Akzidenz_Grotesk_Bold.ttf\"",
+"font_size_custom": "24.0",
+"font_use_global": "false",
+"text_color_custom": "Color(1, 1, 1, 1)",
+"text_color_hovered": "Color(0.9765625, 0.6790161, 0.9370446, 1)",
+"text_color_use_global": "false"
 }
 
 [resource]

@@ -10,7 +10,7 @@ func _execute() -> void:
 	if time == 0:
 		# Randomize the time if it's empty
 		time = randi_range(0.9, 2.5)
-		print("No time set, new time: ", time)
+		#print("No time set, new time: ", time)
 	GlobalVar.emoji_react.emit(emoji, time, amount)
 	finish()
 

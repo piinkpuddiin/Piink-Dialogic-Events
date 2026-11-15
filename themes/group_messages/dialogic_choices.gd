@@ -45,7 +45,7 @@ extends DialogicLayoutLayer
 @export_file('*.tscn') var choices_custom_button: String = ""
 
 func get_choices() -> VBoxContainer:
-	return $Choices
+	return %Choices
 
 
 func get_button_sound() -> DialogicNode_ButtonSound:
@@ -103,7 +103,7 @@ func _apply_export_overrides() -> void:
 
 	var choices : Control = get_choices()
 	choices.add_theme_constant_override(&"separation", boxes_v_separation)
-	#self.position = boxes_offset
+	self.position = boxes_offset
 
 	# replace choice buttons and apply settings
 	for child: Node in choices.get_children():
@@ -131,6 +131,9 @@ func _apply_export_overrides() -> void:
 			new_choice.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 
 		new_choice.custom_minimum_size = boxes_min_size
+		## NOTE: CUSTOM MESSAGES
+		new_choice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		new_choice.alignment = HORIZONTAL_ALIGNMENT_LEFT
 
 
 	set(&'theme', layer_theme)

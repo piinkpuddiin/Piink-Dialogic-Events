@@ -1,20 +1,6 @@
 [gd_scene format=3 uid="uid://dfu5sykqkqmam"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kol6c"]
-content_margin_left = 11.0
-content_margin_top = 9.0
-content_margin_right = 11.0
-content_margin_bottom = 9.0
-bg_color = Color(0.03529412, 0.03529412, 0.03529412, 0.8156863)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.05214367, 6.519912e-05, 0.15311119, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
+[ext_resource type="StyleBox" uid="uid://d0pkvskjp5cbx" path="res://themes/group_messages/message_panel.tres" id="1_ts8gp"]
 
 [node name="NewMessageGroupChat" type="RichTextLabel" unique_id=1376210683]
 custom_minimum_size = Vector2(45, 10)
@@ -25,7 +11,7 @@ offset_right = 460.0
 offset_bottom = 38.0
 theme_override_colors/default_color = Color(0.029506557, 0.029506557, 0.029506557, 1)
 theme_override_font_sizes/normal_font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_kol6c")
+theme_override_styles/normal = ExtResource("1_ts8gp")
 bbcode_enabled = true
 text = "Lorem ipsum dolor sit amet,"
 fit_content = true

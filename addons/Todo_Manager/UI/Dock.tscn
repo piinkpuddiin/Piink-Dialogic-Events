@@ -326,6 +326,7 @@ text = "Auto Refresh"
 [node name="ShowCountButton" type="CheckButton" parent="VBoxContainer/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer5/Patterns" unique_id=554605404]
 layout_mode = 2
 size_flags_horizontal = 0
+button_pressed = true
 text = "Show Count"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Settings/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer5/Patterns" unique_id=2141041299]
