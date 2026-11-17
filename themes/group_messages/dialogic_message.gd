@@ -210,7 +210,6 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 					#print("The speaker is still the same, hide the icon.")
 					icon.modulate = Color(0.0, 0.0, 0.0, 0.0)
 	
-	GlobalVar.new_phone_message.emit(message.get_content_width(), message.get_content_height(), current_speaker, previous_speaker)
 	
 	message.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_LEFT
 	message.text = text
@@ -251,16 +250,11 @@ func add_reaction(reaction, time, amount):
 	reaction_message.text = reaction
 	
 	if message.get_child(0).has_meta('speaker'):
-		# Because the children are ordered differently, the player has to look for 0
+		# ATTENTION Because the children are ordered differently, the player has to look for 0
 		# Also, to fix/improve asap
-		# ATTENTION
 		if message.get_child(0).get_meta('speaker') == "mc":
-			reaction_message.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 			message.get_child(0).get_node('emoji_hbox').add_child(reaction_message)
 	else:
-		print(message.get_children())
-		reaction_message.grow_horizontal = Control.GROW_DIRECTION_END
-		message.get_child(-1).get_node('emoji_hbox2').grow_horizontal = Control.GROW_DIRECTION_END
 		message.get_child(-1).get_node('emoji_hbox2').add_child(reaction_message)
 	
 	
@@ -276,7 +270,6 @@ func add_reaction(reaction, time, amount):
 			reaction_message.text = reaction + str(i) + " "
 
 
-
 func add_player_reaction(message, reaction):
 	var reaction_message: RichTextLabel = load(reaction_label).instantiate()
 	var extra_space = Control.new()
@@ -290,27 +283,29 @@ func add_player_reaction(message, reaction):
 	
 	# Check if the emoji already exists in the selected message
 	if message.get_parent().has_meta('reaction'):
-		print("we have a react")
-		print(message.get_parent().get_meta('emoji'), reaction)
 		if message.get_parent().has_meta('emoji'):
 			if message.get_parent().get_meta('emoji') == reaction:
 				var hbox: String
 				if message.get_node('emoji_hbox2').get_child_count() >= 1:
 					hbox = 'emoji_hbox2'
+					reaction_message.grow_horizontal = Control.GROW_DIRECTION_END
 				else:
 					hbox = 'emoji_hbox'
+					reaction_message.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 				
 				var trimmed_message = message.get_node(hbox).get_child(0).text.trim_suffix(" ")
 				var amount: int = 1
+				# Check if the there is a number at the end of the emoji.
 				if trimmed_message.length() > 1:
-					print("....")
 					amount = int(amount) + 1
 				else:
 					amount = 2
 				message.get_node(hbox).get_child(0).text = reaction + str(amount) + " "
 				return
+			
+			
 			else:
-				print("we do NOT dooooo mathhh")
+				# If an emoji exists but we add a different one in.
 				if message.get_meta('speaker') == "mc":
 					message.get_node('emoji_hbox').add_child(reaction_message)
 				else:
@@ -318,7 +313,6 @@ func add_player_reaction(message, reaction):
 				reaction_message.text = reaction
 				return
 	
-	print("player sent:", message)
 	
 	message.set_meta('reaction', true)
 	message.set_meta('player_sent', true)
@@ -326,22 +320,17 @@ func add_player_reaction(message, reaction):
 	reaction_message.text = reaction
 	reaction_message.z_index = 9
 	
+	
 	if message.has_meta('speaker'):
 		if message.get_meta('speaker') == "mc":
-			message.get_node('emoji_hbox').add_sibling(reaction_message)
+			message.get_node('emoji_hbox').add_child(reaction_message)
 		else: # For anyone that isn't the mc
-			#print("not the mc, we move ot the other side")
-			message.get_node('emoji_hbox2').add_sibling(reaction_message)
-	#
-	## TODO: So much nonsens with this control...
-	##if !message_list.get_child(message.get_index()+1).has_meta('spacer'):
-	##	#print("There is no control below so we can add more space")
-	##	message_list.add_child(extra_space)
-	##	message_list.move_child(extra_space, message.get_index()+1)
-	##	print("the control idx: ", message.get_index()+1)
+			message.get_node('emoji_hbox2').add_child(reaction_message)
 	
-	#extra_space.custom_minimum_size.y = 8
-	#extra_space.name = "extra_space"
+	
+	if !message_list.get_child(message.get_parent().get_index()+1).has_meta('spacer'):
+		message_list.add_child(extra_space)
+		message_list.move_child(extra_space, message.get_parent().get_index()+1)
 
 
 ## Adds an image message (a custom scene)

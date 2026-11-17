@@ -43,7 +43,6 @@ directories/dtl_directory={
 }
 layout/style_directory={
 "": "res://themes/group_messages/smartphone.tres",
-"moon_style": "res://themes/next_page/moon_style.tres",
 "side_dialogue": "res://themes/side_dialogue/side_dialogue.tres",
 "simple": "res://themes/simple/simple.tres",
 "smartphone": "res://themes/group_messages/smartphone.tres"
@@ -80,7 +79,7 @@ audio/channel_defaults={
 "volume": 0.0
 }
 }
-layout/style_list=["res://themes/next_page/moon_style.tres", "res://themes/group_messages/smartphone.tres", "res://themes/side_dialogue/side_dialogue.tres", "res://themes/simple/simple.tres"]
+layout/style_list=["res://themes/group_messages/smartphone.tres", "res://themes/side_dialogue/side_dialogue.tres", "res://themes/simple/simple.tres"]
 layout/default_style="res://themes/group_messages/smartphone.tres"
 glossary/default_case_sensitive=true
 variables={}

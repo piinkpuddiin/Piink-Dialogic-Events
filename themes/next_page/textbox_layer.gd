@@ -49,8 +49,9 @@ func add_message(_text:String) -> void:
 			smallest_line_amount = i
 			break
 	
+	text_node.fit_content = true
 	text_node.bbcode_enabled = true
-	# WARNING
+	# WARNING ??? idk why there is a warning.
 	text_node.custom_minimum_size = Vector2(300, smallest_line_amount * string_size.y) 
 	text_node.text = _text
 	text_node.add_theme_font_size_override("normal_font_size", 32)
