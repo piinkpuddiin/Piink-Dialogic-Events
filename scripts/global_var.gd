@@ -5,6 +5,8 @@ signal start_timeline
 
 ## EMOJI REACTION
 signal emoji_react
+signal player_sent_emoji(emoji)
+
 
 
 ## IMAGE MESSAGE

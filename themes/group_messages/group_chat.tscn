@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://c0c0bjn3k3rip"]
 
 [ext_resource type="Script" uid="uid://jtuckaes4r0o" path="res://themes/group_messages/dialogic_message.gd" id="1_brhxs"]
+[ext_resource type="PackedScene" uid="uid://cn0teum264ruq" path="res://scenes/group_messages/reaction_panel.tscn" id="2_4pmwu"]
 [ext_resource type="Script" uid="uid://drhfq6rmdeuri" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="2_tsecs"]
+[ext_resource type="Script" uid="uid://ex30efrdks0y" path="res://text_effect/uppercase_text.gd" id="4_4pmwu"]
 [ext_resource type="Shader" uid="uid://ccj722y58g2c8" path="res://shaders/glass.gdshader" id="4_4x0bf"]
 [ext_resource type="Material" uid="uid://b8sxilcx8p8tb" path="res://shaders/glass_aero.tres" id="4_hnrjo"]
 
@@ -11,6 +13,10 @@ corner_radius_top_left = 40
 corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_t7ncn"]
+script = ExtResource("4_4pmwu")
+metadata/_custom_type_script = "uid://ex30efrdks0y"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4x0bf"]
 shader = ExtResource("4_4x0bf")
@@ -67,6 +73,7 @@ anti_aliasing_size = 5.009
 
 [node name="DialogicLayoutLayer_MessageChat" type="Node" unique_id=2247279]
 script = ExtResource("1_brhxs")
+reaction_panel = ExtResource("2_4pmwu")
 group_users = Dictionary[String, Color]({
 "n": Color(0.8416027, 0.0067435033, 0.82518685, 1),
 "npc": Color(0.54653955, 0.77727985, 0.9729671, 1)
@@ -134,7 +141,8 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 bbcode_enabled = true
-text = "Lorem ipsum"
+text = "Lorem [ucase]ipsum"
+custom_effects = [SubResource("RichTextEffect_t7ncn")]
 script = ExtResource("2_tsecs")
 textbox_root = NodePath(".")
 metadata/_custom_type_script = "uid://drhfq6rmdeuri"

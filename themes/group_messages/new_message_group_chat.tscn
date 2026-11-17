@@ -1,10 +1,21 @@
 [gd_scene format=3 uid="uid://dfu5sykqkqmam"]
 
 [ext_resource type="StyleBox" uid="uid://d0pkvskjp5cbx" path="res://themes/group_messages/message_panel.tres" id="1_ts8gp"]
+[ext_resource type="Script" uid="uid://ex30efrdks0y" path="res://text_effect/uppercase_text.gd" id="2_yfyam"]
+[ext_resource type="Script" uid="uid://lol50umyx8s0" path="res://text_effect/lowercase_text.gd" id="3_1pfnb"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_jq8ox"]
+script = ExtResource("2_yfyam")
+metadata/_custom_type_script = "uid://ex30efrdks0y"
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_0v712"]
+script = ExtResource("3_1pfnb")
+metadata/_custom_type_script = "uid://lol50umyx8s0"
 
 [node name="NewMessageGroupChat" type="RichTextLabel" unique_id=1376210683]
 custom_minimum_size = Vector2(45, 10)
 custom_maximum_size = Vector2(370, 560)
+clip_contents = false
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 460.0
@@ -13,9 +24,10 @@ theme_override_colors/default_color = Color(0.029506557, 0.029506557, 0.02950655
 theme_override_font_sizes/normal_font_size = 22
 theme_override_styles/normal = ExtResource("1_ts8gp")
 bbcode_enabled = true
-text = "Lorem ipsum dolor sit amet,"
+text = "Lorem ipsum dolor [ucase]sit amet,"
 fit_content = true
 scroll_following = true
+custom_effects = [SubResource("RichTextEffect_jq8ox"), SubResource("RichTextEffect_0v712")]
 
 [node name="time_label" type="Label" parent="." unique_id=762755834]
 visible = false

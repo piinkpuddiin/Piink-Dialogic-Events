@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://cn0teum264ruq"]
+
+[ext_resource type="Script" uid="uid://cyy2nuci5qhaw" path="res://scripts/reaction_panel.gd" id="1_ndd5e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ip37e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ndd5e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xo5rl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ejbum"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7l732"]
+
+[node name="ReactionCanvasLayer" type="CanvasLayer" unique_id=1287154530 node_paths=PackedStringArray("grid_container")]
+layer = 20
+script = ExtResource("1_ndd5e")
+grid_container = NodePath("Panel/ScrollContainer/VBoxContainer/GridContainer")
+
+[node name="clear_panel" type="Button" parent="." unique_id=518308162]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ip37e")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ndd5e")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xo5rl")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ejbum")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7l732")
+
+[node name="Panel" type="Panel" parent="." unique_id=1509445436]
+unique_name_in_owner = true
+offset_right = 307.0
+offset_bottom = 273.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=1117977711]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=317319730]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer" unique_id=2014947537]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="Panel/ScrollContainer/VBoxContainer" unique_id=282973754]
+layout_mode = 2
+columns = 6
+
+[connection signal="pressed" from="clear_panel" to="." method="_on_clear_panel_pressed"]
+[connection signal="visibility_changed" from="clear_panel" to="." method="_on_clear_panel_visibility_changed"]
