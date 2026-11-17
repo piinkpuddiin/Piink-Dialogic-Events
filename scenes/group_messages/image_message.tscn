@@ -11,7 +11,6 @@ corner_radius_bottom_left = 5
 [node name="Panel" type="Panel" unique_id=755786486]
 clip_children = 2
 custom_minimum_size = Vector2(200, 200)
-clip_contents = true
 offset_right = 200.0
 offset_bottom = 200.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3fk7r")
@@ -23,3 +22,30 @@ offset_bottom = 354.0
 texture = ExtResource("1_jgfwb")
 expand_mode = 5
 stretch_mode = 4
+
+[node name="emoji_hbox" type="HBoxContainer" parent="." unique_id=876071875]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+offset_right = 124.0
+grow_vertical = 0
+offset_transform_enabled = true
+offset_transform_position = Vector2(5, 15)
+theme_override_constants/separation = -30
+
+[node name="emoji_hbox2" type="HBoxContainer" parent="." unique_id=1299781557]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -60.0
+grow_horizontal = 0
+grow_vertical = 0
+offset_transform_enabled = true
+offset_transform_position = Vector2(65, 15)
+theme_override_constants/separation = -35

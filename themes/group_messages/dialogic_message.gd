@@ -42,12 +42,13 @@ var last_text_time := ""
 ## Change to true if player speaks first, else to false.
 var new_message:= false
 var tween: Tween
+var message_number: int = 0
 
 
 func _ready() -> void:
 	GlobalVar.new_image_message.connect(add_image_message)
 	GlobalVar.emoji_react.connect(add_reaction)
-	GlobalVar.player_sent_emoji.connect(add_player_reaction)
+	#GlobalVar.player_sent_emoji.connect(add_player_reaction)
 	#Dialogic.Text.text_finished.connect(currently_typing)
 	#Dialogic.Text.about_to_show_text.connect(remove_typing)
 
@@ -142,6 +143,7 @@ func _on_dialogic_node_dialog_text_finished_revealing_text() -> void:
 ## These textboxes are purely visual and not DialogicNode_DialogText nodes!
 ## Only the newest messages appears on the %DialogicNode_DialogText node.
 func add_message(text:String, speaker_name:String, _time:String) -> void:
+	message_number += 1
 	if tween:
 		tween.kill()
 	
@@ -154,6 +156,7 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 	if !previous_speaker == current_speaker:
 		_add_space()
 	
+	hbox.name = "HBoxContainer_" + str(message_number)
 	hbox.size = Vector2(40, 40)
 	hbox.add_theme_constant_override('separation', 13)
 	
@@ -246,24 +249,27 @@ func add_reaction(reaction, time, amount):
 	await get_tree().create_timer(time).timeout
 	
 	reaction_message.text = reaction
+	print("the messages children: ",message.get_children())
 	
+	print("the message: ",message)
 	if message.get_child(0).has_meta('speaker'):
 		if message.get_child(0).get_meta('speaker') == "mc":
-			reaction_message.offset_transform_position = Vector2(37,32)
-			reaction_message.grow_horizontal = Control.GROW_DIRECTION_END
-			#await get_tree().create_timer(randf_range(min_reaction_time, max_reaction_time)).timeout
-			message.add_child(reaction_message)
-			message.move_child(reaction_message, 0)
-			
-		else:
-			reaction_message.offset_transform_position = Vector2(-42,27)
+			print(message.get_children())
 			reaction_message.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-			#await get_tree().create_timer(randf_range(min_reaction_time, max_reaction_time)).timeout
-			message.add_child(reaction_message)
+			message.get_child(0).get_node('emoji_hbox').add_child(reaction_message)
+	else:
+		print(message.get_children())
+		reaction_message.grow_horizontal = Control.GROW_DIRECTION_END
+		message.get_child(-1).get_node('emoji_hbox2').grow_horizontal = Control.GROW_DIRECTION_END
+		#message.get_child(-1).get_node('emoji_hbox2').set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+		message.get_child(-1).get_node('emoji_hbox2').add_child(reaction_message)
+		
+	
 	
 	if !message_list.get_child(message.get_index()+1).has_meta('spacer'):
 		message_list.add_child(extra_space)
-		message_list.move_child(extra_space, message.get_index())
+		message_list.move_child(extra_space, message.get_index()+1)
+	
 	
 	if amount >= 2:
 		for i in range(1,amount+1, 1):
@@ -271,64 +277,71 @@ func add_reaction(reaction, time, amount):
 			await get_tree().create_timer(randf_range(0.5,1.9)).timeout
 			reaction_message.text = reaction + str(i) + " "
 
+	#if message_list.has_node("emoji_reaction_label_player"):
+	#	print('it exists!!')
+	#	message.get_parent().get_node('emoji_reaction_label_player').offset_transform_position = Vector2(-75,34)
+	#	message.get_parent().get_node('emoji_reaction_label').offset_transform_position = Vector2(-118, 34)
+		
 
-func add_player_reaction(message, reaction):
-	var reaction_message: RichTextLabel = load(reaction_label).instantiate()
-	var extra_space = Control.new()
-	
-	extra_space.custom_minimum_size.y = 8
-	extra_space.name = "extra_space"
-	extra_space.set_meta('spacer', true)
-	
-	# Check if the emoji already exists in the selected message
-	if message.has_meta('reaction'):
-		#print("We have a reaction")
-		if reaction == message.get_meta('emoji'):
-			var trimmed_message = message.text.trim_suffix(" ")
-			var amount = trimmed_message.text[1]
-			amount = int(amount) + 1
-			message.text = reaction + str(amount) + " "
-			return
-		else:
-			# Add additional emoji (like behind-ish or to the side)
-			if message.get_child(0).get_meta('speaker') == "mc":
-				reaction_message.offset_transform_position = Vector2(37,32)
-				reaction_message.grow_horizontal = Control.GROW_DIRECTION_END
-			else:
-				reaction_message.offset_transform_position = Vector2(-42,27)
-				reaction_message.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-				
-			#await get_tree().create_timer(randf_range(min_reaction_time, max_reaction_time)).timeout
-			reaction_message.text = reaction
-			message.add_sibling(reaction_message)
-			return
-	
-	message.set_meta('reaction', true)
-	message.set_meta('emoji', reaction)
-	reaction_message.text = reaction
-	reaction_message.z_index = 20
-	
-	#print("We DON'T have a reaction")
-	if message.has_meta('speaker'):
-		if message.get_meta('speaker') == "mc":
-			#print("this is the mc")
-			reaction_message.offset_transform_position = Vector2(39,28)
-			message.add_sibling(reaction_message)
-			message.get_parent().move_child(reaction_message, 0)
-		else:
-			#print("not the mc, we move ot the other side")
-			message.add_sibling(reaction_message)
-	
-	print(message_list.get_child(message.get_index()+1))
-	if !message_list.get_child(message.get_index()+1).has_meta('spacer'):
-		#print("There is no control below so we can add more space")
-		message_list.add_child(extra_space)
-		message_list.move_child(extra_space, message.get_index())
-	
-	extra_space.custom_minimum_size.y = 8
-	extra_space.name = "extra_space"
-	#message_list.move_child(extra_space, message.get_index()+1)
-	#print("El basic")
+#func add_player_reaction(message, reaction):
+#	var reaction_message: RichTextLabel = load(reaction_label).instantiate()
+#	var extra_space = Control.new()
+#	
+#	
+#	reaction_message.name = "emoji_reaction_label_player"
+#	extra_space.custom_minimum_size.y = 8
+#	extra_space.name = "extra_space"
+#	extra_space.set_meta('spacer', true)
+#	
+#	
+#	# Check if the emoji already exists in the selected message
+#	if message.get_parent().has_meta('reaction'):
+#		if message.get_parent().has_meta('emoji'):
+#			if message.get_parent().get_meta('emoji') == reaction:
+#				var trimmed_message = message.text.trim_suffix(" ")
+#				var amount = trimmed_message.text[1]
+#				amount = int(amount) + 1
+#				message.text = reaction + str(amount) + " "
+#				return
+#			else:
+#				# Add additional emoji (like behind-ish or to the side)
+#				if message.get_meta('speaker') == "mc":
+#					pass
+#				else:
+#					if message.get_parent().has_node('emoji_reaction_label'):
+#						message.get_parent().get_node('emoji_reaction_label').offset_transform_position = Vector2(-118, 34)
+#						reaction_message.offset_transform_position = Vector2(-75,34)
+#					else:
+#						reaction_message.offset_transform_position = Vector2(-47,34)
+#				
+#				reaction_message.text = reaction
+#				message.add_sibling(reaction_message)
+#				return
+#	
+#	message.set_meta('reaction', true)
+#	message.set_meta('player_sent', true)
+#	message.set_meta('emoji', reaction)
+#	reaction_message.text = reaction
+#	reaction_message.z_index = 9
+#	
+#	if message.has_meta('speaker'):
+#		if message.get_meta('speaker') == "mc":
+#			#reaction_message.offset_transform_position = Vector2(39,28)
+#			message.add_sibling(reaction_message)
+#			message.get_parent().move_child(reaction_message, 0)
+#		else:
+#			#print("not the mc, we move ot the other side")
+#			message.add_sibling(reaction_message)
+#	
+#	# TODO: So much nonsens with this control...
+#	#if !message_list.get_child(message.get_index()+1).has_meta('spacer'):
+#	#	#print("There is no control below so we can add more space")
+#	#	message_list.add_child(extra_space)
+#	#	message_list.move_child(extra_space, message.get_index()+1)
+#	#	print("the control idx: ", message.get_index()+1)
+#	
+#	extra_space.custom_minimum_size.y = 8
+#	extra_space.name = "extra_space"
 
 
 ## Adds an image message (a custom scene)
