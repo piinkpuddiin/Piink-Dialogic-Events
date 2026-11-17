@@ -2,6 +2,8 @@
 extends DialogicLayoutLayer
 enum Alignments {LEFT, CENTER, RIGHT}
 
+# TODO: make the most recently used emoji show in the hbox (up to 5/6)
+
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
 @onready var dialog_text = %DialogicNode_DialogText
 @onready var scroll_container = %ScrollContainer

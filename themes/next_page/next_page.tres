@@ -15,7 +15,7 @@ scene = ExtResource("3_cc6uu")
 
 [resource]
 script = ExtResource("4_b3ucb")
-name = "moon_style"
+name = "next_page"
 layer_list = Array[String](["10"])
 layer_info = {
 "": SubResource("Resource_r8vw2"),

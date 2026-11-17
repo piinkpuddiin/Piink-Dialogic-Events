@@ -5,7 +5,7 @@ extends Control
 
 var textbox_themes:= {
 	"group_message": "res://themes/group_messages/smartphone.tres",
-	"next_page": "res://themes/next_page/moon_style.tres",
+	"next_page": "res://themes/next_page/next_page.tres",
 	"update_id": "res://themes/side_dialogue/side_dialogue.tres",
 	"story_progress": "res://themes/simple/simple.tres",
 }
