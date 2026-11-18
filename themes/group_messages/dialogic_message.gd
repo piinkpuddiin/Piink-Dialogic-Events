@@ -4,6 +4,7 @@ enum Alignments {LEFT, CENTER, RIGHT}
 
 # TODO: make the most recently used emoji show in the hbox (up to 5/6)
 
+@onready var reaction_canvas_layer: CanvasLayer = %ReactionCanvasLayer
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
 @onready var dialog_text = %DialogicNode_DialogText
 @onready var scroll_container = %ScrollContainer
@@ -45,9 +46,6 @@ var last_text_time := ""
 var new_message:= false
 var tween: Tween
 var message_number: int = 0
-
-#var reaction_panel = preload("res://scenes/group_messages/reaction_panel.tscn")
-#var emoji_panel = reaction_panel.instantiate()
 
 func _ready() -> void:
 	GlobalVar.new_image_message.connect(add_image_message)
@@ -232,17 +230,16 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 func add_emoji_panel(event: InputEvent, curr_message):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
 		if event.pressed:
-			print("Right clicked!!")
-			#var reaction_panel = preload("res://scenes/group_messages/reaction_panel.tscn")
-			#var emoji_panel = reaction_panel.instantiate()
-			#get_parent().add_child(emoji_panel)
-			%ReactionCanvasLayer.show()
-			%ReactionCanvasLayer.curr_message = curr_message
+			reaction_canvas_layer.show()
+			reaction_canvas_layer.curr_message = curr_message
 
 
 #region IMAGES
 func add_reaction(reaction, time, amount):
 	var message = message_list.get_child(-1)
+	if message.has_meta('spacer'):
+		message = message_list.get_child(-2)
+	
 	var reaction_message: RichTextLabel = load(reaction_label).instantiate()
 	var extra_space = Control.new()
 	
@@ -252,13 +249,10 @@ func add_reaction(reaction, time, amount):
 	
 	message.set_meta('reaction', true)
 	message.set_meta('emoji', reaction)
+	reaction_message.text = reaction
 	await get_tree().create_timer(time).timeout
 	
-	reaction_message.text = reaction
-	
 	if message.get_child(0).has_meta('speaker'):
-		# ATTENTION Because the children are ordered differently, the player has to look for 0
-		# Also, to fix/improve asap
 		if message.get_child(0).get_meta('speaker') == "mc":
 			message.get_child(0).get_node('emoji_hbox').add_child(reaction_message)
 	else:
@@ -280,7 +274,10 @@ func add_reaction(reaction, time, amount):
 func add_player_reaction(message, reaction):
 	# We stop the player from adding more than one emoji.
 	if message.has_meta('player_sent'):
-		return
+		if message.has_meta('emoji'):
+			if message.get_meta('emoji') == reaction:
+				return
+	
 	
 	var reaction_message: RichTextLabel = load(reaction_label).instantiate()
 	var extra_space = Control.new()
@@ -340,10 +337,16 @@ func add_player_reaction(message, reaction):
 		else: # For anyone that isn't the mc
 			message.get_node('emoji_hbox2').add_child(reaction_message)
 	
+	var next_idx = message.get_parent().get_index()+1
+	print("the size: ",message_list.get_children().size(),"// next_idx: ", next_idx)
 	
-	if !message_list.get_child(message.get_parent().get_index()+1).has_meta('spacer'):
+	if message_list.get_children().size() > next_idx:
+		if !message_list.get_child(next_idx).has_meta('spacer'):
+			message_list.add_child(extra_space)
+			message_list.move_child(extra_space, next_idx)
+	else:
 		message_list.add_child(extra_space)
-		message_list.move_child(extra_space, message.get_parent().get_index()+1)
+		message_list.move_child(extra_space, next_idx)
 
 
 ## Adds an image message (a custom scene)
@@ -397,6 +400,7 @@ func add_image_message(image:String, speaker:String) -> void:
 	message.set_meta('speaker', speaker)
 	message.custom_minimum_size.y = message.get_node('Image').get_size().y / 2
 	message.custom_minimum_size.x = message.get_node('Image').get_size().x
+	message.gui_input.connect(add_emoji_panel.bind(message))
 	
 	message_list.add_child(hbox)
 	audio_stream_player.play()
