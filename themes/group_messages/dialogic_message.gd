@@ -17,7 +17,7 @@ enum Alignments {LEFT, CENTER, RIGHT}
 @export_category("Scenes")
 @export_file('*.extension') var message_scene: String = "res://themes/group_messages/new_message_group_chat.tscn"
 @export_file('*.extension') var message_icon: String = "res://scenes/group_messages/user_icon.tscn"
-@export var reaction_panel: PackedScene
+
 var curr_typing_message:= "res://themes/group_messages/typing_message.tscn"
 #res://themes/group_messages/typing_message.tscn
 @export_file('*.extension') var image_message: String = "res://scenes/group_messages/image_message.tscn"
@@ -46,6 +46,8 @@ var new_message:= false
 var tween: Tween
 var message_number: int = 0
 
+#var reaction_panel = preload("res://scenes/group_messages/reaction_panel.tscn")
+#var emoji_panel = reaction_panel.instantiate()
 
 func _ready() -> void:
 	GlobalVar.new_image_message.connect(add_image_message)
@@ -216,7 +218,7 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 	message.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_LEFT
 	message.text = text
 	message.vertical_alignment = VerticalAlignment.VERTICAL_ALIGNMENT_CENTER
-	message.gui_input.connect(emoji_panel.bind(message))
+	message.gui_input.connect(add_emoji_panel.bind(message))
 	message.set_meta('speaker', speaker_name)
 	previous_speaker = current_speaker
 	
@@ -227,12 +229,15 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 	scroll_container.ensure_control_visible(hbox)
 #endregion
 
-func emoji_panel(event: InputEvent, curr_message):
+func add_emoji_panel(event: InputEvent, curr_message):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
 		if event.pressed:
-			var new_child = reaction_panel.instantiate()
-			get_parent().add_child(new_child)
-			new_child.curr_message = curr_message
+			print("Right clicked!!")
+			#var reaction_panel = preload("res://scenes/group_messages/reaction_panel.tscn")
+			#var emoji_panel = reaction_panel.instantiate()
+			#get_parent().add_child(emoji_panel)
+			%ReactionCanvasLayer.show()
+			%ReactionCanvasLayer.curr_message = curr_message
 
 
 #region IMAGES
@@ -271,8 +276,12 @@ func add_reaction(reaction, time, amount):
 			await get_tree().create_timer(randf_range(0.5,1.9)).timeout
 			reaction_message.text = reaction + str(i) + " "
 
-
+## Add an emoji from the player's side.
 func add_player_reaction(message, reaction):
+	# We stop the player from adding more than one emoji.
+	if message.has_meta('player_sent'):
+		return
+	
 	var reaction_message: RichTextLabel = load(reaction_label).instantiate()
 	var extra_space = Control.new()
 	
@@ -288,6 +297,7 @@ func add_player_reaction(message, reaction):
 		if message.get_parent().has_meta('emoji'):
 			if message.get_parent().get_meta('emoji') == reaction:
 				var hbox: String
+				# We check to see which hbox has children/emojis inside of it.
 				if message.get_node('emoji_hbox2').get_child_count() >= 1:
 					hbox = 'emoji_hbox2'
 					reaction_message.grow_horizontal = Control.GROW_DIRECTION_END
@@ -295,11 +305,12 @@ func add_player_reaction(message, reaction):
 					hbox = 'emoji_hbox'
 					reaction_message.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 				
+				# We trim the emoji from the additional space
 				var trimmed_message = message.get_node(hbox).get_child(0).text.trim_suffix(" ")
 				var amount: int = 1
 				# Check if the there is a number at the end of the emoji.
-				if trimmed_message.length() > 1:
-					amount = int(amount) + 1
+				if trimmed_message.length() == 2:
+					amount = int(trimmed_message[1]) + 1
 				else:
 					amount = 2
 				message.get_node(hbox).get_child(0).text = reaction + str(amount) + " "
