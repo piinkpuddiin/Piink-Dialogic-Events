@@ -3,6 +3,7 @@ extends DialogicLayoutLayer
 enum Alignments {LEFT, CENTER, RIGHT}
 
 # TODO: make the most recently used emoji show in the hbox (up to 5/6)
+# TODO: Set a limit of 3 emojis per message
 
 @onready var reaction_canvas_layer: CanvasLayer = %ReactionCanvasLayer
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
@@ -247,6 +248,7 @@ func add_reaction(reaction, time, amount):
 	extra_space.name = "extra_space"
 	extra_space.set_meta('spacer', true)
 	
+	message.set_meta('emoji_amount', 1)
 	message.set_meta('reaction', true)
 	message.set_meta('emoji', reaction)
 	reaction_message.text = reaction
@@ -254,9 +256,9 @@ func add_reaction(reaction, time, amount):
 	
 	if message.get_child(0).has_meta('speaker'):
 		if message.get_child(0).get_meta('speaker') == "mc":
-			message.get_child(0).get_node('emoji_hbox').add_child(reaction_message)
+			message.get_child(0).get_node('emoji_hbox_mc').add_child(reaction_message)
 	else:
-		message.get_child(-1).get_node('emoji_hbox2').add_child(reaction_message)
+		message.get_child(-1).get_node('emoji_hbox_npc').add_child(reaction_message)
 	
 	
 	if !message_list.get_child(message.get_index()+1).has_meta('spacer'):
@@ -273,10 +275,15 @@ func add_reaction(reaction, time, amount):
 ## Add an emoji from the player's side.
 func add_player_reaction(message, reaction):
 	# We stop the player from adding more than one emoji.
-	if message.has_meta('player_sent'):
-		if message.has_meta('emoji'):
-			if message.get_meta('emoji') == reaction:
+	if message.get_parent().has_meta('player_sent'):
+		if message.get_parent().has_meta('emoji'):
+			if message.get_parent().get_meta('emoji') == reaction:
 				return
+	
+	
+	if message.get_parent().has_meta('emoji_amount'):
+		if message.get_parent().get_meta('emoji_amount') >= 3:
+			return
 	
 	
 	var reaction_message: RichTextLabel = load(reaction_label).instantiate()
@@ -290,55 +297,53 @@ func add_player_reaction(message, reaction):
 	
 	
 	# Check if the emoji already exists in the selected message
-	if message.get_parent().has_meta('reaction'):
-		if message.get_parent().has_meta('emoji'):
-			if message.get_parent().get_meta('emoji') == reaction:
-				var hbox: String
-				# We check to see which hbox has children/emojis inside of it.
-				if message.get_node('emoji_hbox2').get_child_count() >= 1:
-					hbox = 'emoji_hbox2'
-					reaction_message.grow_horizontal = Control.GROW_DIRECTION_END
-				else:
-					hbox = 'emoji_hbox'
-					reaction_message.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-				
-				# We trim the emoji from the additional space
-				var trimmed_message = message.get_node(hbox).get_child(0).text.trim_suffix(" ")
-				var amount: int = 1
-				# Check if the there is a number at the end of the emoji.
-				if trimmed_message.length() == 2:
-					amount = int(trimmed_message[1]) + 1
-				else:
-					amount = 2
-				message.get_node(hbox).get_child(0).text = reaction + str(amount) + " "
-				return
-			
-			
+	if message.get_parent().has_meta('emoji'):
+		if message.get_parent().get_meta('emoji') == reaction:
+			var hbox: String
+			# We check to see which hbox has children/emojis inside of it.
+			if message.get_node('emoji_hbox_npc').get_child_count() >= 1:
+				hbox = 'emoji_hbox_npc'
+				reaction_message.grow_horizontal = Control.GROW_DIRECTION_END
 			else:
-				# If an emoji exists but we add a different one in.
-				if message.get_meta('speaker') == "mc":
-					message.get_node('emoji_hbox').add_child(reaction_message)
-				else:
-					message.get_node('emoji_hbox2').add_child(reaction_message)
-				reaction_message.text = reaction
-				return
+				hbox = 'emoji_hbox_mc'
+				reaction_message.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+			
+			# We trim the emoji from the additional space
+			var trimmed_message = message.get_node(hbox).get_child(0).text.trim_suffix(" ")
+			var amount: int = 1
+			# Check if the there is a number at the end of the emoji.
+			if trimmed_message.length() == 2:
+				amount = int(trimmed_message[1]) + 1
+			else:
+				amount = 2
+			message.get_node(hbox).get_child(0).text = reaction + str(amount) + " "
+			return
+		
+		# If an emoji exists but we add a different one in.
+		else:
+			message.get_parent().set_meta('emoji_amount', message.get_parent().get_meta('emoji_amount') + 1)
+			reaction_message.text = reaction
+			if message.get_meta('speaker') == "mc":
+				message.get_node('emoji_hbox_mc').add_child(reaction_message)
+			else:
+				message.get_node('emoji_hbox_npc').add_child(reaction_message)
+			return
 	
-	
-	message.set_meta('reaction', true)
-	message.set_meta('player_sent', true)
-	message.set_meta('emoji', reaction)
+	message.get_parent().set_meta('emoji_amount', 1)
+	message.get_parent().set_meta('reaction', true)
+	message.get_parent().set_meta('player_sent', true)
+	message.get_parent().set_meta('emoji', reaction)
 	reaction_message.text = reaction
 	reaction_message.z_index = 9
 	
 	
 	if message.has_meta('speaker'):
 		if message.get_meta('speaker') == "mc":
-			message.get_node('emoji_hbox').add_child(reaction_message)
+			message.get_node('emoji_hbox_mc').add_child(reaction_message)
 		else: # For anyone that isn't the mc
-			message.get_node('emoji_hbox2').add_child(reaction_message)
+			message.get_node('emoji_hbox_npc').add_child(reaction_message)
 	
 	var next_idx = message.get_parent().get_index()+1
-	print("the size: ",message_list.get_children().size(),"// next_idx: ", next_idx)
 	
 	if message_list.get_children().size() > next_idx:
 		if !message_list.get_child(next_idx).has_meta('spacer'):
@@ -371,7 +376,6 @@ func add_image_message(image:String, speaker:String) -> void:
 		match speaker:
 			player_name:
 				hbox.move_child(icon, -1)
-				
 				hbox.alignment = BoxContainer.ALIGNMENT_END
 				hbox.grow_horizontal = Control.GROW_DIRECTION_END
 				
