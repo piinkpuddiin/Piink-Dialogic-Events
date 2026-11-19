@@ -36,6 +36,7 @@ var curr_typing_message:= "res://themes/group_messages/typing_message.tscn"
 @export var additional_message_space:= 14
 @export var min_reaction_time:= 0.1
 @export var max_reaction_time:= .9
+@export var emoji_limit:= 3
 
 ## These properties store information on the last text,
 ## so that a textbox that looks the same can be added, when the next text is revealed.
@@ -180,20 +181,10 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 			player_name:
 				hbox.move_child(icon, -1)
 				
+				# NOTE: Sets the message to the right.
 				hbox.alignment = BoxContainer.ALIGNMENT_END
 				message.grow_horizontal = Control.GROW_DIRECTION_END
-				# NOTE: Sets the message to the right.
-				#message.horizontal_alignment= HorizontalAlignment.HORIZONTAL_ALIGNMENT_RIGHT
-				
-				if !previous_speaker == current_speaker:
-					var icon_profile = icon.get_node("TextureRect")
-					icon_profile.modulate = mc_color
-					#print("This is the mc speaking, so the same speaker needs to be true to work")
-				elif previous_speaker == current_speaker:
-					icon.modulate = Color(0.0, 0.0, 0.0, 0.0)
-					#print("This is still the mc speaking, we hide the icon")
-					if message_list.get_child(-2).has_meta('reaction'): 
-						print("The above message has a reaction!")
+				set_speaker_icon(previous_speaker, current_speaker, icon)
 			
 			# NOTE: Make usernames match with profile picture for simplicity sake
 			_:
@@ -202,17 +193,7 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 				hbox.alignment = BoxContainer.ALIGNMENT_BEGIN
 				message.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 				message.vertical_alignment = VerticalAlignment.VERTICAL_ALIGNMENT_CENTER
-				
-				if !previous_speaker == current_speaker:
-					#print("The speaker is not the same as the previous one. Show the icon.")
-					var icon_profile = icon.get_node("TextureRect")
-					for i in group_users.keys():
-						if i == current_speaker:
-							icon_profile.modulate = group_users[i]
-				elif previous_speaker == current_speaker:
-					#print("The speaker is still the same, hide the icon.")
-					icon.modulate = Color(0.0, 0.0, 0.0, 0.0)
-	
+				set_speaker_icon(previous_speaker, current_speaker, icon)
 	
 	message.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_LEFT
 	message.text = text
@@ -226,7 +207,21 @@ func add_message(text:String, speaker_name:String, _time:String) -> void:
 	
 	await get_tree().process_frame
 	scroll_container.ensure_control_visible(hbox)
+
+
+func set_speaker_icon(_previous_speaker, current_speaker, icon):
+	if !_previous_speaker == current_speaker:
+		var icon_profile = icon.get_node("TextureRect")
+		var icon_path = "res://images/group_message/profile_%s.png" % current_speaker
+		icon_profile.texture = load(icon_path)
+		#print("This is the mc speaking, so the same speaker needs to be true to work")
+	elif _previous_speaker == current_speaker:
+		icon.modulate = Color(0.0, 0.0, 0.0, 0.0)
+		#print("This is still the mc speaking, we hide the icon")
+		if message_list.get_child(-2).has_meta('emoji'): 
+			print("The above message has a reaction!")
 #endregion
+
 
 func add_emoji_panel(event: InputEvent, curr_message):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
@@ -249,7 +244,6 @@ func add_reaction(reaction, time, amount):
 	extra_space.set_meta('spacer', true)
 	
 	message.set_meta('emoji_amount', 1)
-	message.set_meta('reaction', true)
 	message.set_meta('emoji', reaction)
 	reaction_message.text = reaction
 	await get_tree().create_timer(time).timeout
@@ -282,7 +276,7 @@ func add_player_reaction(message, reaction):
 	
 	
 	if message.get_parent().has_meta('emoji_amount'):
-		if message.get_parent().get_meta('emoji_amount') >= 3:
+		if message.get_parent().get_meta('emoji_amount') >= emoji_limit:
 			return
 	
 	
@@ -330,11 +324,10 @@ func add_player_reaction(message, reaction):
 			return
 	
 	message.get_parent().set_meta('emoji_amount', 1)
-	message.get_parent().set_meta('reaction', true)
 	message.get_parent().set_meta('player_sent', true)
 	message.get_parent().set_meta('emoji', reaction)
 	reaction_message.text = reaction
-	reaction_message.z_index = 9
+	reaction_message.z_index = 10
 	
 	
 	if message.has_meta('speaker'):

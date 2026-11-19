@@ -3,20 +3,35 @@
 [ext_resource type="Script" uid="uid://jtuckaes4r0o" path="res://themes/group_messages/dialogic_message.gd" id="1_brhxs"]
 [ext_resource type="PackedScene" uid="uid://cn0teum264ruq" path="res://scenes/group_messages/reaction_panel.tscn" id="2_4pmwu"]
 [ext_resource type="Script" uid="uid://drhfq6rmdeuri" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="2_tsecs"]
-[ext_resource type="Script" uid="uid://ex30efrdks0y" path="res://text_effect/uppercase_text.gd" id="4_4pmwu"]
+[ext_resource type="Script" uid="uid://ex30efrdks0y" path="res://scripts/text_effect/uppercase_text.gd" id="4_4pmwu"]
 [ext_resource type="Shader" uid="uid://ccj722y58g2c8" path="res://shaders/glass.gdshader" id="4_4x0bf"]
 [ext_resource type="Material" uid="uid://b8sxilcx8p8tb" path="res://shaders/glass_aero.tres" id="4_hnrjo"]
+[ext_resource type="Texture2D" uid="uid://deijhbb01jmw5" path="res://images/group_message/wifi.png" id="5_p5g4p"]
+[ext_resource type="Texture2D" uid="uid://bph5amxs4tpf6" path="res://images/group_message/phone_border.png" id="6_3qq8a"]
+[ext_resource type="Texture2D" uid="uid://d0koumyvo0mw3" path="res://images/group_message/battery_android_3.svg" id="6_kvfqd"]
+[ext_resource type="Texture2D" uid="uid://wjdorrkpqrps" path="res://images/group_message/back_icon.png" id="7_6whyk"]
+[ext_resource type="FontFile" uid="uid://0qws7xhxj38g" path="res://fonts/poppins/Poppins-Bold.ttf" id="8_kdmkk"]
+[ext_resource type="Texture2D" uid="uid://bnl3ksfq203j" path="res://images/group_message/add_icon.png" id="8_kvfqd"]
+[ext_resource type="Texture2D" uid="uid://bmaxq1vwmxsa6" path="res://images/group_message/phone_icon.png" id="9_wgvh6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rxnwj"]
 bg_color = Color(0.04303915, 0.043039158, 0.04303913, 1)
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
+corner_radius_top_left = 55
+corner_radius_top_right = 55
+corner_radius_bottom_right = 55
+corner_radius_bottom_left = 55
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_t7ncn"]
 script = ExtResource("4_4pmwu")
 metadata/_custom_type_script = "uid://ex30efrdks0y"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p5g4p"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 95
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_bottom_right = 55
+corner_radius_bottom_left = 55
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4x0bf"]
 shader = ExtResource("4_4x0bf")
@@ -35,15 +50,15 @@ shader_parameter/chromatic_strength = 5.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4pmwu"]
 bg_color = Color(0.6, 0.6, 0.9019608, 0)
-corner_radius_top_left = 40
-corner_radius_top_right = 40
+corner_radius_top_left = 55
+corner_radius_top_right = 55
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4x0bf"]
 bg_color = Color(0.05882353, 0.05882353, 0.05882353, 0.92156863)
 border_width_bottom = 2
 border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 40
-corner_radius_top_right = 40
+corner_radius_top_left = 55
+corner_radius_top_right = 55
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bai0e"]
 bg_color = Color(0, 0, 0, 0)
@@ -56,20 +71,6 @@ corner_radius_top_left = 36
 corner_radius_top_right = 36
 corner_radius_bottom_right = 36
 corner_radius_bottom_left = 36
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5qnws"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.021434633, 0.021434639, 0.021434609, 1)
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
-corner_detail = 10
-anti_aliasing_size = 5.009
 
 [node name="DialogicLayoutLayer_MessageChat" type="Node" unique_id=2247279]
 script = ExtResource("1_brhxs")
@@ -88,8 +89,9 @@ anchor_right = 0.65625
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.99, 0.99)
+pivot_offset_ratio = Vector2(0.5, 0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_rxnwj")
-metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="Panel" unique_id=1502169675]
 clip_contents = true
@@ -100,9 +102,9 @@ anchor_bottom = 1.0
 offset_top = 19.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 10
+theme_override_constants/margin_left = 22
 theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
+theme_override_constants/margin_right = 22
 theme_override_constants/margin_bottom = 10
 
 [node name="MarginContainer2" type="MarginContainer" parent="Panel/MarginContainer2" unique_id=1555417841]
@@ -120,7 +122,7 @@ size_flags_vertical = 8
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer2" unique_id=1128235594]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 950)
+custom_minimum_size = Vector2(0, 945)
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 0
@@ -152,10 +154,6 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 20.0
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=380181331]
-unique_name_in_owner = true
-volume_db = -50.0
-
 [node name="PhoneUI" type="Control" parent="." unique_id=439304358]
 z_index = 10
 custom_minimum_size = Vector2(600, 1080)
@@ -171,30 +169,148 @@ offset_right = 300.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.99, 0.99)
+pivot_offset_ratio = Vector2(0.5, 0.5)
 mouse_filter = 2
+
+[node name="bottom_gradient_text" type="Panel" parent="PhoneUI" unique_id=185959857]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -105.65674
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_p5g4p")
 
 [node name="top_ui_blur_panel" type="Panel" parent="PhoneUI" unique_id=888081563]
 material = SubResource("ShaderMaterial_4x0bf")
-custom_minimum_size = Vector2(0, 90)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 90.0
+offset_bottom = 100.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4pmwu")
 
 [node name="top_ui_panel" type="Panel" parent="PhoneUI" unique_id=778367012]
 self_modulate = Color(1, 1, 1, 0.6392157)
-custom_minimum_size = Vector2(0, 90)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 90.0
+offset_bottom = 100.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4x0bf")
 
+[node name="MarginContainer" type="MarginContainer" parent="PhoneUI/top_ui_panel" unique_id=390875619]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 44.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PhoneUI/top_ui_panel/MarginContainer" unique_id=469339038]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer" unique_id=1157206428]
+layout_mode = 2
+offset_transform_enabled = true
+
+[node name="time_label" type="RichTextLabel" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1555118935]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/normal_font_size = 17
+bbcode_enabled = true
+text = "23:02 Thu. 19 Nov"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Control" type="Control" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1292779351]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="wifi_icon_texture_rect" type="TextureRect" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=492333353]
+texture_filter = 4
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("5_p5g4p")
+expand_mode = 1
+
+[node name="battery_percent_label" type="RichTextLabel" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=946032066]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/normal_font_size = 17
+bbcode_enabled = true
+text = "40 %"
+fit_content = true
+autowrap_mode = 0
+
+[node name="battery_icon_texture_rect" type="TextureRect" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1304582705]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -3)
+texture = ExtResource("6_kvfqd")
+expand_mode = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer" unique_id=126800860]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -3)
+
+[node name="back_icon_texture_rect" type="TextureRect" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=666222862]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+texture = ExtResource("7_6whyk")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=409920809]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer/HBoxContainer2/Control" unique_id=723477265]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 30
+
+[node name="group_chat_label" type="RichTextLabel" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer/HBoxContainer2/Control/MarginContainer" unique_id=1308591546]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/bold_font = ExtResource("8_kdmkk")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[b]The Lorem Ipsum Chatterz"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="back_icon_texture_rect2" type="TextureRect" parent="PhoneUI/top_ui_panel/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=435860567]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+texture = ExtResource("9_wgvh6")
+expand_mode = 1
+
 [node name="MarginContainer" type="MarginContainer" parent="PhoneUI" unique_id=2125026599]
-custom_minimum_size = Vector2(0, 90)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -203,10 +319,10 @@ anchor_bottom = 1.0
 offset_top = -106.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_left = 20
+theme_override_constants/margin_left = 27
 theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_right = 27
+theme_override_constants/margin_bottom = 35
 
 [node name="bottom_ui_hbox" type="HBoxContainer" parent="PhoneUI/MarginContainer" unique_id=930259159]
 layout_mode = 2
@@ -214,7 +330,7 @@ size_flags_horizontal = 17
 
 [node name="plus_colorrect" type="ColorRect" parent="PhoneUI/MarginContainer/bottom_ui_hbox" unique_id=407598923]
 material = ExtResource("4_hnrjo")
-custom_maximum_size = Vector2(80, -1)
+custom_maximum_size = Vector2(65, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -226,6 +342,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bai0e")
+
+[node name="add_icon_texture_rect" type="TextureRect" parent="PhoneUI/MarginContainer/bottom_ui_hbox/plus_colorrect/border_panel" unique_id=2081110055]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.5
+offset_top = -36.5
+offset_right = 36.5
+offset_bottom = 36.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.73, 0.73)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("8_kvfqd")
 
 [node name="Control" type="Control" parent="PhoneUI/MarginContainer/bottom_ui_hbox" unique_id=754786489]
 custom_maximum_size = Vector2(20, -1)
@@ -246,18 +379,46 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bai0e")
 
-[node name="phone_border_panel" type="Panel" parent="PhoneUI" unique_id=333455157]
+[node name="MarginContainer" type="MarginContainer" parent="PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel" unique_id=1045521471]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel/MarginContainer" unique_id=835148909]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 1, 0.49019608)
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "Lorem ipsum dolor sit ammet"
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="phone_border" type="TextureRect" parent="PhoneUI" unique_id=1596162318]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.01, 1.01)
+pivot_offset_ratio = Vector2(0.5, 0.5)
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_5qnws")
+texture = ExtResource("6_3qq8a")
 
 [node name="ReactionCanvasLayer" parent="." unique_id=1287154530 instance=ExtResource("2_4pmwu")]
 unique_name_in_owner = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=380181331]
+unique_name_in_owner = true
+volume_db = -50.0
 
 [connection signal="finished_revealing_text" from="Panel/MarginContainer2/ScrollContainer/MessageList/DialogicNode_DialogText" to="." method="_on_dialogic_node_dialog_text_finished_revealing_text"]
 [connection signal="started_revealing_text" from="Panel/MarginContainer2/ScrollContainer/MessageList/DialogicNode_DialogText" to="." method="_on_dialogic_node_dialog_text_started_revealing_text"]

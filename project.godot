@@ -106,12 +106,14 @@ folder_colors={
 "res://addons/dialogic_additions/ImageMessage/": "orange",
 "res://addons/dialogic_additions/NextPage/": "teal",
 "res://addons/dialogic_additions/UpdateIdentifier/": "pink",
-"res://images/bg/": "pink",
 "res://images/group_message/": "orange",
 "res://images/mini-portrait/": "pink",
 "res://scenes/group_messages/": "orange",
 "res://scenes/side_dialogue/": "pink",
-"res://scenes/story_progress/": "blue"
+"res://scenes/story_progress/": "blue",
+"res://themes/group_messages/": "orange",
+"res://themes/next_page/": "green",
+"res://themes/side_dialogue/": "pink"
 }
 
 [gui]
