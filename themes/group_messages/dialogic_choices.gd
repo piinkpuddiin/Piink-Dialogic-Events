@@ -44,6 +44,12 @@ extends DialogicLayoutLayer
 @export var maximum_choices: int = 10
 @export_file('*.tscn') var choices_custom_button: String = ""
 
+var tween: Tween
+
+func _ready() -> void:
+	Dialogic.Choices.question_shown.connect(animate_choices)
+
+
 func get_choices() -> VBoxContainer:
 	return %Choices
 
@@ -125,30 +131,48 @@ func _apply_export_overrides() -> void:
 			new_choice = (choices_button.instantiate() as DialogicNode_ChoiceButton)
 		else:
 			new_choice = DialogicNode_ChoiceButton.new()
-		choices.add_child(new_choice)
 		new_choice.modulate.a = 0
-		
-		var tween:= DialogicUtil.autoload().get_tree().create_tween()
-		tween.tween_property(new_choice, "modulate:a", 0.0, 0)
-		tween.tween_interval((2.0 + i) / 2)
-		tween.tween_property(new_choice, "modulate:a", 1.0, (.7 + i) / 2)
+		choices.add_child(new_choice)
 		
 		if boxes_fill_width:
 			new_choice.size_flags_horizontal = Control.SIZE_FILL
 		else:
 			new_choice.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-
+		
 		new_choice.custom_minimum_size = boxes_min_size
 		## NOTE: CUSTOM MESSAGES
 		new_choice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		new_choice.alignment = HORIZONTAL_ALIGNMENT_LEFT
-
-
+	
 	set(&'theme', layer_theme)
-
+	
 	# apply sound settings
 	var button_sound: DialogicNode_ButtonSound = get_button_sound()
 	button_sound.volume_db = sounds_volume
 	button_sound.sound_pressed = load(sounds_pressed)
 	button_sound.sound_hover = load(sounds_hover)
 	button_sound.sound_focus = load(sounds_focus)
+
+
+func animate_choices(_info):
+	var x: int = 1
+	var choices: Control = get_choices()
+	tween = DialogicUtil.autoload().get_tree().create_tween()
+	
+	for i in choices.get_children():
+		if i is DialogicNode_ButtonSound:
+			continue
+		tween.tween_property(i, "modulate:a", 0.0, 0)
+	
+	tween.tween_interval(.8)
+	
+	for i in choices.get_children():
+		if i is DialogicNode_ButtonSound:
+			continue
+		
+		tween.tween_property(i, "modulate:a", 0.0, 0)
+		tween.tween_interval((0.2 * x) / 5)
+		tween.tween_property(i, "modulate:a", 1.0, (.3 * x) / 5)
+		print("The first math: ", (0.2 * x )/ 5,"// the second math: ", (.3 * x) / 5)
+		
+		x += 1

@@ -3,25 +3,40 @@ n: This is the beginning of the timeline.
 [emoji_reaction emoji="💕" time="2" amount="2"]
 mc: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 - choice 1
-	mc: Did we get it??
-	mc: One more to see...
 	set GlobalVar.npc_nickname = 'joe'
 - choice 2
+	mc: Second choice selected!
 - choice 3
-	mc: Hopefully... 😔
 - choice 4
 - choice 5
+- choice 6
+- choice 7
+- choice 8
+- choice 9
+- choice 10
 n: Duis aute.
 [emoji_reaction emoji="😁" time="0" amount="2"]
 mc: irure dolor in reprehenderit?
 n: in voluptate!
-- choice 6
-- hoopla
-- choice 7
-- choice 8
-- choice 9
+- choice 11
+- 🐰
+	# This emoji will go to the 'hoopla' text that will be inserted via code.
+	[emoji_reaction emoji="🥕" time="1" amount="0"]
+	mc: hoppity hoopla hop!
+	n: Wow! I didn't expect a hoopla from you?!
+- choice 13
+- choice 14
+- choice 15
+- choice 16
+- choice 17
+- choice 18
+- choice 19
+#- choice 13
+#- choice 14
+#- choice 15
+#- choice 16
 mc: velit esse cillum dolore eu fugiat nulla pariatur.
-[emoji_reaction emoji="🍎" time="1" amount="1"]
+[emoji_reaction emoji="🍎" time="2" amount="1"]
 [emoji_reaction emoji="🐛" time="0" amount="1"]
 npc: Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam!
 [emoji_reaction emoji="❔" time="0" amount="3"]

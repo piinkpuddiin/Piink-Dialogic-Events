@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://fja7w46r7dcc"]
+
+[ext_resource type="Shader" uid="uid://sfltdyd8lerg" path="res://shaders/highlight.gdshader" id="1_tdt5j"]
+
+[resource]
+shader = ExtResource("1_tdt5j")
+shader_parameter/Line_Smoothness = 0.045
+shader_parameter/Line_Width = 0.09
+shader_parameter/Brightness = 1.0
+shader_parameter/Rotation_deg = 30.0
+shader_parameter/Distortion = 1.226000010735
+shader_parameter/Speed = 0.1
+shader_parameter/Position = 0.0
+shader_parameter/Position_Min = 0.25
+shader_parameter/Position_Max = 0.5
+shader_parameter/Alpha = 0.050000002375

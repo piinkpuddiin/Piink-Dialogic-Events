@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://jtuckaes4r0o" path="res://themes/group_messages/dialogic_message.gd" id="1_brhxs"]
 [ext_resource type="PackedScene" uid="uid://cn0teum264ruq" path="res://scenes/group_messages/reaction_panel.tscn" id="2_4pmwu"]
+[ext_resource type="Material" uid="uid://fja7w46r7dcc" path="res://shaders/highlight.tres" id="2_sdhy7"]
 [ext_resource type="Script" uid="uid://drhfq6rmdeuri" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="2_tsecs"]
 [ext_resource type="Script" uid="uid://ex30efrdks0y" path="res://scripts/text_effect/uppercase_text.gd" id="4_4pmwu"]
 [ext_resource type="Shader" uid="uid://ccj722y58g2c8" path="res://shaders/glass.gdshader" id="4_4x0bf"]
@@ -13,9 +14,10 @@
 [ext_resource type="FontFile" uid="uid://0qws7xhxj38g" path="res://fonts/poppins/Poppins-Bold.ttf" id="8_kdmkk"]
 [ext_resource type="Texture2D" uid="uid://bnl3ksfq203j" path="res://images/group_message/add_icon.png" id="8_kvfqd"]
 [ext_resource type="Texture2D" uid="uid://bmaxq1vwmxsa6" path="res://images/group_message/phone_icon.png" id="9_wgvh6"]
+[ext_resource type="StyleBox" uid="uid://u5wnbitr85xj" path="res://themes/group_messages/black_border_panel.tres" id="11_kdmkk"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rxnwj"]
-bg_color = Color(0.04303915, 0.043039158, 0.04303913, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1g55t"]
+bg_color = Color(0.056291588, 0.056291603, 0.056291595, 1)
 corner_radius_top_left = 55
 corner_radius_top_right = 55
 corner_radius_bottom_right = 55
@@ -55,22 +57,10 @@ corner_radius_top_right = 55
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4x0bf"]
 bg_color = Color(0.05882353, 0.05882353, 0.05882353, 0.92156863)
-border_width_bottom = 2
-border_color = Color(0, 0, 0, 1)
+border_width_bottom = 3
+border_color = Color(0.021434637, 0.021434635, 0.021434633, 1)
 corner_radius_top_left = 55
 corner_radius_top_right = 55
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bai0e"]
-bg_color = Color(0, 0, 0, 0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 36
-corner_radius_top_right = 36
-corner_radius_bottom_right = 36
-corner_radius_bottom_left = 36
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rxnwj"]
 shader = ExtResource("4_4x0bf")
@@ -87,24 +77,12 @@ shader_parameter/edge_highlight = Color(1, 1, 1, 0.3)
 shader_parameter/edge_width = 0.0
 shader_parameter/chromatic_strength = 5.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_balt5"]
-bg_color = Color(0, 0, 0, 0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 36
-corner_radius_top_right = 36
-corner_radius_bottom_right = 36
-corner_radius_bottom_left = 36
-
 [sub_resource type="Animation" id="Animation_6whyk"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect:custom_minimum_size")
+tracks/0/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect:custom_minimum_size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -116,7 +94,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect:material:shader_parameter/corner_radius")
+tracks/1/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect:material:shader_parameter/corner_radius")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -128,7 +106,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_top_left")
+tracks/2/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_top_left")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -140,7 +118,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_top_right")
+tracks/3/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_top_right")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -152,7 +130,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_bottom_right")
+tracks/4/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_bottom_right")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -164,7 +142,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_bottom_left")
+tracks/5/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_bottom_left")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -176,7 +154,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel/MarginContainer/RichTextLabel:theme_override_colors/default_color")
+tracks/6/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel/MarginContainer/message_bar_label:theme_override_colors/default_color")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -192,7 +170,7 @@ length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect:custom_minimum_size")
+tracks/0/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect:custom_minimum_size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -204,7 +182,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect:material:shader_parameter/corner_radius")
+tracks/1/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect:material:shader_parameter/corner_radius")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -216,7 +194,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_top_left")
+tracks/2/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_top_left")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -228,7 +206,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_top_right")
+tracks/3/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_top_right")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -240,7 +218,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_bottom_right")
+tracks/4/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_bottom_right")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -252,7 +230,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_bottom_left")
+tracks/5/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel:theme_override_styles/panel:corner_radius_bottom_left")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -264,7 +242,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel/MarginContainer/RichTextLabel:theme_override_colors/default_color")
+tracks/6/path = NodePath("PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel/MarginContainer/message_bar_label:theme_override_colors/default_color")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -299,7 +277,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.99, 0.99)
 pivot_offset_ratio = Vector2(0.5, 0.5)
-theme_override_styles/panel = SubResource("StyleBoxFlat_rxnwj")
+theme_override_styles/panel = SubResource("StyleBoxFlat_1g55t")
 
 [node name="MarginContainer2" type="MarginContainer" parent="Panel" unique_id=1502169675]
 clip_contents = true
@@ -364,6 +342,7 @@ offset_bottom = 20.0
 
 [node name="PhoneUI" type="Control" parent="." unique_id=439304358]
 z_index = 10
+material = ExtResource("2_sdhy7")
 custom_minimum_size = Vector2(600, 1080)
 layout_mode = 3
 anchors_preset = 8
@@ -409,7 +388,7 @@ custom_minimum_size = Vector2(0, 120)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 100.0
+offset_bottom = 123.838356
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4x0bf")
 
@@ -523,7 +502,7 @@ size_flags_vertical = 4
 texture = ExtResource("9_wgvh6")
 expand_mode = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="PhoneUI" unique_id=2125026599]
+[node name="bottom_ui_margin_container" type="MarginContainer" parent="PhoneUI" unique_id=2125026599]
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 1
 anchors_preset = 12
@@ -538,11 +517,11 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 27
 theme_override_constants/margin_bottom = 35
 
-[node name="bottom_ui_hbox" type="HBoxContainer" parent="PhoneUI/MarginContainer" unique_id=930259159]
+[node name="bottom_ui_hbox" type="HBoxContainer" parent="PhoneUI/bottom_ui_margin_container" unique_id=930259159]
 layout_mode = 2
 size_flags_horizontal = 17
 
-[node name="plus_colorrect" type="ColorRect" parent="PhoneUI/MarginContainer/bottom_ui_hbox" unique_id=407598923]
+[node name="plus_colorrect" type="ColorRect" parent="PhoneUI/bottom_ui_margin_container/bottom_ui_hbox" unique_id=407598923]
 material = ExtResource("4_hnrjo")
 custom_minimum_size = Vector2(65, 65)
 custom_maximum_size = Vector2(65, 65)
@@ -550,16 +529,16 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 8
 
-[node name="border_panel" type="Panel" parent="PhoneUI/MarginContainer/bottom_ui_hbox/plus_colorrect" unique_id=425729133]
+[node name="border_panel" type="Panel" parent="PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/plus_colorrect" unique_id=425729133]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bai0e")
+theme_override_styles/panel = ExtResource("11_kdmkk")
 
-[node name="add_icon_texture_rect" type="TextureRect" parent="PhoneUI/MarginContainer/bottom_ui_hbox/plus_colorrect/border_panel" unique_id=2081110055]
+[node name="add_icon_texture_rect" type="TextureRect" parent="PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/plus_colorrect/border_panel" unique_id=2081110055]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -576,26 +555,26 @@ scale = Vector2(0.73, 0.73)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("8_kvfqd")
 
-[node name="Control" type="Control" parent="PhoneUI/MarginContainer/bottom_ui_hbox" unique_id=754786489]
+[node name="Control" type="Control" parent="PhoneUI/bottom_ui_margin_container/bottom_ui_hbox" unique_id=754786489]
 custom_maximum_size = Vector2(20, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="message_bar_colorrect" type="ColorRect" parent="PhoneUI/MarginContainer/bottom_ui_hbox" unique_id=823031763]
+[node name="message_bar_colorrect" type="ColorRect" parent="PhoneUI/bottom_ui_margin_container/bottom_ui_hbox" unique_id=823031763]
 material = SubResource("ShaderMaterial_rxnwj")
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="border_panel" type="Panel" parent="PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect" unique_id=1912866264]
+[node name="border_panel" type="Panel" parent="PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect" unique_id=1912866264]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_balt5")
+theme_override_styles/panel = ExtResource("11_kdmkk")
 
-[node name="MarginContainer" type="MarginContainer" parent="PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel" unique_id=1045521471]
+[node name="MarginContainer" type="MarginContainer" parent="PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel" unique_id=1045521471]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -607,7 +586,7 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PhoneUI/MarginContainer/bottom_ui_hbox/message_bar_colorrect/border_panel/MarginContainer" unique_id=835148909]
+[node name="message_bar_label" type="RichTextLabel" parent="PhoneUI/bottom_ui_margin_container/bottom_ui_hbox/message_bar_colorrect/border_panel/MarginContainer" unique_id=835148909]
 layout_mode = 2
 theme_override_colors/default_color = Color(1, 1, 1, 0.49019608)
 theme_override_font_sizes/normal_font_size = 22
@@ -621,6 +600,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -2.030159
+offset_right = 2.0301514
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.01, 1.01)

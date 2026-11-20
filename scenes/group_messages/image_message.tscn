@@ -3,24 +3,24 @@
 [ext_resource type="Texture2D" uid="uid://bvju7x7m5egxf" path="res://images/group_message/cloud_study__stormy_sunset_1998.20.1.jpg" id="1_jgfwb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3fk7r"]
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [node name="Panel" type="Panel" unique_id=755786486]
 clip_children = 2
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(340, 320)
 offset_right = 200.0
 offset_bottom = 200.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3fk7r")
 
 [node name="Image" type="TextureRect" parent="." unique_id=154738875]
-layout_mode = 0
-offset_right = 351.0
-offset_bottom = 354.0
+layout_mode = 1
+offset_right = 4096.0
+offset_bottom = 2902.0
+scale = Vector2(0.11, 0.11)
 texture = ExtResource("1_jgfwb")
-expand_mode = 5
 stretch_mode = 4
 
 [node name="emoji_hbox_mc" type="HBoxContainer" parent="." unique_id=876071875]

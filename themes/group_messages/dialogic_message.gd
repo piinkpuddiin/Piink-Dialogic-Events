@@ -53,6 +53,7 @@ func _ready() -> void:
 	GlobalVar.new_image_message.connect(add_image_message)
 	GlobalVar.emoji_react.connect(add_reaction)
 	GlobalVar.player_sent_emoji.connect(add_player_reaction)
+	
 	Dialogic.Choices.question_shown.connect(message_bar_anim.bind(true))
 	Dialogic.Choices.choice_selected.connect(message_bar_anim.bind(false))
 	Dialogic.Choices.choice_selected.connect(selected_choice)
@@ -86,12 +87,12 @@ func selected_choice(_info) -> void:
 	#		print("the chara name: ", events[i].character.get_character_name())
 	#		if !events[i].character.get_character_name() == "mc":
 	#			break
-	#
+	
 	#print("The current event idx: ", curr_event_idx)
 	#print("We skipped all these events: ", x)
 	#print("new text idx: ", curr_event_idx + x)
 	
-	events.insert(curr_event_idx, text_event)
+	events.insert(_info['event_index']+1, text_event)
 	
 	var timeline: DialogicTimeline = DialogicTimeline.new()
 	timeline.events = events
@@ -311,15 +312,12 @@ func add_player_reaction(message, reaction):
 			if message.get_parent().get_meta('emoji') == reaction:
 				return
 	
-	
 	if message.get_parent().has_meta('emoji_amount'):
 		if message.get_parent().get_meta('emoji_amount') >= emoji_limit:
 			return
 	
-	
 	var reaction_message: RichTextLabel = load(reaction_label).instantiate()
 	var extra_space = Control.new()
-	
 	
 	reaction_message.name = "emoji_reaction_label_player"
 	extra_space.custom_minimum_size.y = 8
@@ -408,32 +406,17 @@ func add_image_message(image:String, speaker:String) -> void:
 				hbox.move_child(icon, -1)
 				hbox.alignment = BoxContainer.ALIGNMENT_END
 				hbox.grow_horizontal = Control.GROW_DIRECTION_END
-				
-				if !previous_speaker == current_speaker:
-					var icon_profile = icon.get_node("TextureRect")
-					icon_profile.modulate = mc_color
-				elif previous_speaker == current_speaker:
-					icon.modulate = Color(0.0, 0.0, 0.0, 0.0)
+				set_speaker_icon(previous_speaker, current_speaker, icon)
 			_:
 				hbox.move_child(icon, 0)
-				
 				hbox.alignment = BoxContainer.ALIGNMENT_BEGIN
 				hbox.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-				
-				if !previous_speaker == current_speaker:
-					var icon_profile = icon.get_node("TextureRect")
-					for i in group_users.keys():
-						if i == current_speaker:
-							icon_profile.modulate = group_users[i]
-				elif previous_speaker == current_speaker:
-					icon.modulate = Color(0.0, 0.0, 0.0, 0.0)
+				set_speaker_icon(previous_speaker, current_speaker, icon)
 	
 	message.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	message.position = Vector2(200,50)
 	message.get_node('Image').texture = load(image)
 	message.set_meta('speaker', speaker)
-	message.custom_minimum_size.y = message.get_node('Image').get_size().y / 2
-	message.custom_minimum_size.x = message.get_node('Image').get_size().x
 	message.gui_input.connect(add_emoji_panel.bind(message))
 	
 	message_list.add_child(hbox)
