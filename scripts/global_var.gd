@@ -15,7 +15,8 @@ signal new_image_message
 
 ## GROUP MESSAGES
 signal new_phone_message
-
+var npc_affection:= 0.0
+var npc_nickname:= 'nick'
 
 ## UPDATE TEXTBOX IDENTIFIER
 signal update_textbox_identifier

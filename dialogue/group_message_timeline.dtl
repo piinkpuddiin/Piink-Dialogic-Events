@@ -2,12 +2,26 @@ n: This is the beginning of the timeline.
 [image_message speaker="n" image="res://images/group_message/cloud_study__stormy_sunset_1998.20.1.jpg"]
 [emoji_reaction emoji="💕" time="2" amount="2"]
 mc: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+- choice 1
+	mc: Did we get it??
+	mc: One more to see...
+	set GlobalVar.npc_nickname = 'joe'
+- choice 2
+- choice 3
+	mc: Hopefully... 😔
+- choice 4
+- choice 5
 n: Duis aute.
-[emoji_reaction emoji="😁" time="0.1" amount="2"]
+[emoji_reaction emoji="😁" time="0" amount="2"]
 mc: irure dolor in reprehenderit?
 n: in voluptate!
+- choice 6
+- hoopla
+- choice 7
+- choice 8
+- choice 9
 mc: velit esse cillum dolore eu fugiat nulla pariatur.
-[emoji_reaction emoji="🍎" time="1.6" amount="1"]
+[emoji_reaction emoji="🍎" time="1" amount="1"]
 [emoji_reaction emoji="🐛" time="0" amount="1"]
 npc: Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam!
 [emoji_reaction emoji="❔" time="0" amount="3"]

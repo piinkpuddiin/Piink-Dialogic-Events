@@ -111,12 +111,14 @@ func _apply_export_overrides() -> void:
 			child.queue_free()
 
 	var choices_button: PackedScene = null
+	
 	if not choices_custom_button.is_empty():
 		if ResourceLoader.exists(choices_custom_button):
 			choices_button = (load(choices_custom_button) as PackedScene)
 		else:
 			printerr("[Dialogic] Unable to load custom choice button from ", choices_custom_button)
-
+	
+	# NOTE: Adds the choice button
 	for i in range(0, maximum_choices):
 		var new_choice : DialogicNode_ChoiceButton
 		if choices_button != null:
@@ -124,7 +126,13 @@ func _apply_export_overrides() -> void:
 		else:
 			new_choice = DialogicNode_ChoiceButton.new()
 		choices.add_child(new_choice)
-
+		new_choice.modulate.a = 0
+		
+		var tween:= DialogicUtil.autoload().get_tree().create_tween()
+		tween.tween_property(new_choice, "modulate:a", 0.0, 0)
+		tween.tween_interval((2.0 + i) / 2)
+		tween.tween_property(new_choice, "modulate:a", 1.0, (.7 + i) / 2)
+		
 		if boxes_fill_width:
 			new_choice.size_flags_horizontal = Control.SIZE_FILL
 		else:

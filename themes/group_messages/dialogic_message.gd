@@ -53,6 +53,9 @@ func _ready() -> void:
 	GlobalVar.new_image_message.connect(add_image_message)
 	GlobalVar.emoji_react.connect(add_reaction)
 	GlobalVar.player_sent_emoji.connect(add_player_reaction)
+	Dialogic.Choices.question_shown.connect(message_bar_anim.bind(true))
+	Dialogic.Choices.choice_selected.connect(message_bar_anim.bind(false))
+	Dialogic.Choices.choice_selected.connect(selected_choice)
 	#Dialogic.Text.text_finished.connect(currently_typing)
 	#Dialogic.Text.about_to_show_text.connect(remove_typing)
 
@@ -60,6 +63,40 @@ func _ready() -> void:
 func _apply_export_overrides() -> void:
 	if !is_inside_tree():
 		await ready
+
+
+func message_bar_anim(_info, visible:bool) -> void:
+	if visible:
+		%AnimationPlayer.play("message_bar_choice")
+	else:
+		%AnimationPlayer.play_backwards("message_bar_choice", -2.5)
+
+
+func selected_choice(_info) -> void:
+	var events: Array = Dialogic.current_timeline_events
+	var curr_event_idx: int = Dialogic.current_event_idx
+	var text_event = DialogicTextEvent.new()
+	text_event.text = _info['text']
+	text_event.character = load("res://characters/mc.dch")
+	#var x:= -1
+	#
+	#for i in range(curr_event_idx,events.size()):
+	#	x += 1
+	#	if events[i] is DialogicTextEvent:
+	#		print("the chara name: ", events[i].character.get_character_name())
+	#		if !events[i].character.get_character_name() == "mc":
+	#			break
+	#
+	#print("The current event idx: ", curr_event_idx)
+	#print("We skipped all these events: ", x)
+	#print("new text idx: ", curr_event_idx + x)
+	
+	events.insert(curr_event_idx, text_event)
+	
+	var timeline: DialogicTimeline = DialogicTimeline.new()
+	timeline.events = events
+	timeline.events_processed = true
+	Dialogic.start(timeline, curr_event_idx)
 
 
 func currently_typing(_info) -> void:
